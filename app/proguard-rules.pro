@@ -16,6 +16,9 @@
 #   public *;
 #}
 
+# Retrolambda
+-dontwarn java.lang.invoke.*
+
 # Platform calls Class.forName on types which do not exist on Android to determine platform.
 -dontnote retrofit2.Platform
 # Platform used when running on RoboVM on iOS. Will not be used at runtime.
@@ -26,3 +29,5 @@
 -keepattributes Signature
 # Retain declared checked exceptions for use by a Proxy instance.
 -keepattributes Exceptions
+
+

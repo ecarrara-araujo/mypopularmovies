@@ -21,7 +21,7 @@ public class RestApiConnection {
 
     private static final String QUERY_PARAMETER_API_KEY = "api_key";
     private static final String API_KEY = BuildConfig.THE_MOVIE_DB_API_KEY;
-    private static final String API_DATE_FORMAT = "yyyy-MM-dd";
+
 
     private String serverBaseUrl;
     private Retrofit retrofit;
@@ -70,7 +70,7 @@ public class RestApiConnection {
 
     private Converter.Factory buildGsonConverterFactory() {
         Gson gson = new GsonBuilder()
-                .setDateFormat(API_DATE_FORMAT)
+                .setDateFormat(RestConfigs.API_DATE_FORMAT)
                 .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
                 .registerTypeAdapterFactory(AutoValuesGsonAdapterFactory.create())
                 .create();

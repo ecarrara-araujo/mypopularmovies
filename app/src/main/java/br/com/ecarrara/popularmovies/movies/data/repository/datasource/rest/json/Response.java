@@ -12,10 +12,10 @@ import java.util.List;
 
 @AutoValue public abstract class Response {
 
-    @SerializedName("page") abstract Integer page();
-    @SerializedName("results") abstract List<Result> results();
-    @SerializedName("total_results") abstract Integer totalResults();
-    @SerializedName("total_pages") abstract Integer totalPages();
+    @SerializedName("page") public abstract Integer page();
+    @SerializedName("results") public abstract List<Result> results();
+    @SerializedName("total_results") public abstract Integer totalResults();
+    @SerializedName("total_pages")public abstract Integer totalPages();
 
     public static TypeAdapter<Response> typeAdapter(Gson gson) {
         return new AutoValue_Response.GsonTypeAdapter(gson)
