@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -53,9 +55,33 @@ public class MovieListActivity extends AppCompatActivity implements MovieListVie
     }
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.movie_list_menu, menu);
+        return true;
+    }
+
+    @Override
     protected void onResume() {
         super.onResume();
         this.moviesListPresenter.attachTo(this);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        final int itemId = item.getItemId();
+
+        switch (itemId) {
+            case (R.id.menu_action_load_most_popular):
+                this.moviesListPresenter.onListPopularMovies();
+                break;
+            case(R.id.menu_action_load_top_rated):
+                this.moviesListPresenter.onListTopRatedMovies();
+                break;
+            default:
+                this.showError("How on Earth did you got here?");
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

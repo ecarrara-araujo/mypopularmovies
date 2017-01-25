@@ -2,4 +2,6 @@
     <string name="app_name">Popular Movies</string>
     <string name="retry_button_description">Retry button</string>
     <string name="movie_poster_description">Movie poster</string>
+    <string name="top_rated">Top Rated</string>
+    <string name="most_popular">Most Popular</string>
 </resources>
