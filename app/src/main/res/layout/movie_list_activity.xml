@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/movie_list_activity_margin"
     android:paddingRight="@dimen/movie_list_activity_margin"
-    tools:context="br.com.ecarrara.popularmovies.movies.presentation.MovieListActivity">
+    tools:context="br.com.ecarrara.popularmovies.movies.presentation.view.MovieListActivity">
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_movie_list"

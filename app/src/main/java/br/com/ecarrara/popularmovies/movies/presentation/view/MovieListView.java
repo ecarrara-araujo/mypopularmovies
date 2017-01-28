@@ -1,4 +1,4 @@
-package br.com.ecarrara.popularmovies.movies.presentation;
+package br.com.ecarrara.popularmovies.movies.presentation.view;
 
 import java.util.List;
 

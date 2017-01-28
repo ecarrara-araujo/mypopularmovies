@@ -1,4 +1,4 @@
-package br.com.ecarrara.popularmovies.movies.presentation;
+package br.com.ecarrara.popularmovies.movies.presentation.view;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +14,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import br.com.ecarrara.popularmovies.R;
+import br.com.ecarrara.popularmovies.movies.presentation.presenter.MoviesListPresenter;
 import br.com.ecarrara.popularmovies.movies.presentation.model.MovieListItemViewModel;
 
 import static android.view.View.GONE;

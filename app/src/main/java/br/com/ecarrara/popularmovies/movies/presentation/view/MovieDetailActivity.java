@@ -1,7 +1,6 @@
-package br.com.ecarrara.popularmovies.movies.presentation;
+package br.com.ecarrara.popularmovies.movies.presentation.view;
 
 import android.content.Intent;
-import android.icu.math.BigDecimal;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ViewGroup;
@@ -14,6 +13,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import br.com.ecarrara.popularmovies.R;
+import br.com.ecarrara.popularmovies.movies.presentation.presenter.MovieDetailPresenter;
 import br.com.ecarrara.popularmovies.movies.presentation.model.MovieDetailViewModel;
 
 import static android.view.View.GONE;

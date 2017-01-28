@@ -1,4 +1,4 @@
-package br.com.ecarrara.popularmovies.movies.presentation;
+package br.com.ecarrara.popularmovies.movies.presentation.view;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;

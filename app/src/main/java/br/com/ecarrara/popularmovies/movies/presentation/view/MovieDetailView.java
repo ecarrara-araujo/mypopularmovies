@@ -1,4 +1,4 @@
-package br.com.ecarrara.popularmovies.movies.presentation;
+package br.com.ecarrara.popularmovies.movies.presentation.view;
 
 import br.com.ecarrara.popularmovies.core.presentation.LoadDataView;
 import br.com.ecarrara.popularmovies.movies.presentation.model.MovieDetailViewModel;

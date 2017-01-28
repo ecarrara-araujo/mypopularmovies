@@ -13,6 +13,8 @@ import br.com.ecarrara.popularmovies.movies.data.repository.MoviesRepository;
 import br.com.ecarrara.popularmovies.movies.domain.entity.Movie;
 import br.com.ecarrara.popularmovies.movies.presentation.model.MovieListItemViewModel;
 import br.com.ecarrara.popularmovies.movies.presentation.model.MovieListItemViewModelMapper;
+import br.com.ecarrara.popularmovies.movies.presentation.presenter.MoviesListPresenter;
+import br.com.ecarrara.popularmovies.movies.presentation.view.MovieListView;
 import br.com.ecarrara.popularmovies.testdata.movies.PopularMoviesTestData;
 import br.com.ecarrara.popularmovies.testdata.movies.TopRatedMoviesTestData;
 import io.reactivex.Single;
