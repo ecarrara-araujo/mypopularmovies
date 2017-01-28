@@ -72,8 +72,8 @@ public class MoviesListPresenter implements Presenter<MovieListView> {
         initialize(this.moviesRepository.listTopRatedMovies());
     }
 
-    public void onMovieSelected(MovieListItemViewModel movieListItemViewModel) {
-        this.movieListView.navigateToMovieDetailScreen(movieListItemViewModel.movieId());
+    public void onMovieSelected(Integer movieId) {
+        this.movieListView.navigateToMovieDetailScreen(movieId);
     }
 
     private void initialize(Single<List<Movie>> moviesList) {
@@ -82,9 +82,9 @@ public class MoviesListPresenter implements Presenter<MovieListView> {
         this.movieListView.showLoading();
 
         moviesListDisposable = moviesList
+                .flatMap(movies -> Single.just(MovieListItemViewModelMapper.transformFrom(movies)))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .flatMap(movies -> Single.just(MovieListItemViewModelMapper.transformFrom(movies)))
                 .subscribe(
                         this::displayMovieList,
                         exception -> displayError(exception.getMessage())

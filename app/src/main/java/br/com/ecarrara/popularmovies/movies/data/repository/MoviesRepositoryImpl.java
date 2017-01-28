@@ -7,6 +7,7 @@ import br.com.ecarrara.popularmovies.core.networking.rest.RestConfigs;
 import br.com.ecarrara.popularmovies.movies.data.repository.datasource.MoviesDataSource;
 import br.com.ecarrara.popularmovies.movies.data.repository.datasource.rest.MoviesRestApiDataSource;
 import br.com.ecarrara.popularmovies.movies.domain.entity.Movie;
+import br.com.ecarrara.popularmovies.movies.presentation.model.MovieDetailViewModel;
 import io.reactivex.Single;
 
 public class MoviesRepositoryImpl implements MoviesRepository {
@@ -27,6 +28,11 @@ public class MoviesRepositoryImpl implements MoviesRepository {
 
     public Single<List<Movie>> listTopRatedMovies() {
         return this.moviesDataSource.listTopRatedMovies();
+    }
+
+    @Override
+    public Single<Movie> getMovieDetail(int movieId) {
+        return this.moviesDataSource.getMovieDetail(movieId);
     }
 
 }

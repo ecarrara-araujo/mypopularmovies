@@ -1,5 +1,6 @@
 package br.com.ecarrara.popularmovies.movies.presentation;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
@@ -18,7 +19,8 @@ import br.com.ecarrara.popularmovies.movies.presentation.model.MovieListItemView
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
-public class MovieListActivity extends AppCompatActivity implements MovieListView {
+public class MovieListActivity extends AppCompatActivity
+        implements MovieListView, MovieListAdapter.MovieSelectedListener {
 
     private MoviesListPresenter moviesListPresenter;
     private MovieListAdapter movieListAdapter;
@@ -48,7 +50,7 @@ public class MovieListActivity extends AppCompatActivity implements MovieListVie
         movieListView = (RecyclerView) findViewById(R.id.recycler_view_movie_list);
 
         GridLayoutManager layoutManager = new GridLayoutManager(this, NUMBER_OF_COLUMNS_IN_GRID);
-        movieListAdapter = new MovieListAdapter(MovieListActivity.this);
+        movieListAdapter = new MovieListAdapter(MovieListActivity.this, MovieListActivity.this);
         movieListView.setAdapter(movieListAdapter);
         movieListView.setLayoutManager(layoutManager);
         movieListView.setHasFixedSize(true);
@@ -64,6 +66,12 @@ public class MovieListActivity extends AppCompatActivity implements MovieListVie
     protected void onResume() {
         super.onResume();
         this.moviesListPresenter.attachTo(this);
+    }
+
+    @Override
+    protected void onDestroy() {
+        this.moviesListPresenter.destroy();
+        super.onDestroy();
     }
 
     @Override
@@ -92,7 +100,9 @@ public class MovieListActivity extends AppCompatActivity implements MovieListVie
 
     @Override
     public void navigateToMovieDetailScreen(Integer movieId) {
-
+        Intent movieDetailIntent = new Intent(MovieListActivity.this, MovieDetailActivity.class);
+        movieDetailIntent.putExtra(MovieDetailView.MOVIE_ID_KEY, movieId);
+        startActivity(movieDetailIntent);
     }
 
     @Override
@@ -140,5 +150,10 @@ public class MovieListActivity extends AppCompatActivity implements MovieListVie
         hideError();
         hideRetry();
         movieListView.setVisibility(VISIBLE);
+    }
+
+    @Override
+    public void onMovieSelected(Integer movieId) {
+        this.moviesListPresenter.onMovieSelected(movieId);
     }
 }

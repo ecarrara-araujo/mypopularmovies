@@ -1,13 +1,11 @@
 package br.com.ecarrara.popularmovies.movies.presentation;
 
 import android.content.Context;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -20,9 +18,15 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
 
     private List<MovieListItemViewModel> movieListItemViewModels;
     private Context parentContext;
+    private MovieSelectedListener movieSelectedListener;
 
-    public MovieListAdapter(Context context) {
+    public interface MovieSelectedListener {
+        void onMovieSelected(Integer movieId);
+    }
+
+    public MovieListAdapter(Context context, MovieSelectedListener movieSelectedListener) {
         this.parentContext = context;
+        this.movieSelectedListener = movieSelectedListener;
     }
 
     @Override
@@ -52,12 +56,19 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         notifyDataSetChanged();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         final ImageView moviePoster;
 
         public ViewHolder(View itemView) {
             super(itemView);
             moviePoster =(ImageView) itemView.findViewById(R.id.image_view_movie_poster);
+            moviePoster.setOnClickListener(ViewHolder.this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            MovieListAdapter.this.movieSelectedListener
+                    .onMovieSelected(movieListItemViewModels.get(getAdapterPosition()).movieId());
         }
     }
 

@@ -13,6 +13,7 @@ import br.com.ecarrara.popularmovies.core.utils.datetime.DateUtils;
     public static final String NO_TITLE = "";
     public static final String NO_OVERVIEW = "";
     public static final Date INVALID_DATE = DateUtils.INVALID_DATE;
+    public static final String INVALID_FORMATTED_DATE = "";
     public static final double NO_POPULARITY = -1;
     public static final double NO_VOTE_AVERAGE = -1;
     public static final String NO_POSTER_PATH = "";

@@ -39,4 +39,11 @@ public class MoviesRestApiDataSource implements MoviesDataSource {
                 .map(RestMovieMapper::transformFrom)
                 .toList();
     }
+
+    @Override
+    public Single<Movie> getMovieDetail(int movieId) {
+        return moviesRestApi
+                .getMovieDetail(movieId)
+                .map(RestMovieMapper::transformFrom);
+    }
 }
