@@ -2,5 +2,22 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
-    <dimen name="movie_list_activity_margin">8dp</dimen>
+
+    <!-- Movie List -->
+    <dimen name="movie_list_view_padding_left">8dp</dimen>
+    <dimen name="movie_list_view_padding_right">@dimen/movie_list_view_padding_left</dimen>
+
+    <!-- Movie List Item -->
+    <dimen name="movie_list_item_poster_height">275dp</dimen>
+    <dimen name="movie_list_item_padding_left">8dp</dimen>
+    <dimen name="movie_list_item_padding_right">@dimen/movie_list_item_padding_left</dimen>
+    <dimen name="movie_list_item_padding_top">16dp</dimen>
+    <dimen name="movie_list_item_padding_bottom">0dp</dimen>
+    
+    <!-- Movie Detail -->
+    <dimen name="movie_detail_view_padding_left">16dp</dimen>
+    <dimen name="movie_detail_view_padding_right">@dimen/movie_list_item_padding_left</dimen>
+    <dimen name="movie_detail_view_padding_top">16dp</dimen>
+    <dimen name="movie_detail_view_padding_bottom">@dimen/movie_detail_view_padding_top</dimen>
+
 </resources>

@@ -4,8 +4,8 @@
     android:id="@+id/activity_movie_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/movie_list_activity_margin"
-    android:paddingRight="@dimen/movie_list_activity_margin"
+    android:paddingStart="@dimen/movie_list_view_padding_left"
+    android:paddingEnd="@dimen/movie_list_view_padding_right"
     tools:context="br.com.ecarrara.popularmovies.movies.presentation.view.MovieListActivity">
 
     <android.support.v7.widget.RecyclerView

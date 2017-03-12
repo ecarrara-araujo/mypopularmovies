@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="275dp">
+    android:layout_height="wrap_content">
 
     <ImageView
         android:id="@+id/image_view_movie_poster"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:paddingTop="16dp"
-        android:paddingBottom="0dp"
-        android:paddingLeft="8dp"
-        android:paddingRight="8dp"
+        android:layout_height="@dimen/movie_list_item_poster_height"
+        android:paddingTop="@dimen/movie_list_item_padding_top"
+        android:paddingBottom="@dimen/movie_list_item_padding_bottom"
+        android:paddingStart="@dimen/movie_list_view_padding_left"
+        android:paddingEnd="@dimen/movie_list_view_padding_right"
         android:contentDescription="@string/movie_poster_description" />
 
 </FrameLayout>
