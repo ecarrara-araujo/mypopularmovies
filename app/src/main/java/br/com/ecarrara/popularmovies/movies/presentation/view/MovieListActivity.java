@@ -16,6 +16,8 @@ import java.util.List;
 import br.com.ecarrara.popularmovies.R;
 import br.com.ecarrara.popularmovies.movies.presentation.presenter.MoviesListPresenter;
 import br.com.ecarrara.popularmovies.movies.presentation.model.MovieListItemViewModel;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -26,29 +28,26 @@ public class MovieListActivity extends AppCompatActivity
     private MoviesListPresenter moviesListPresenter;
     private MovieListAdapter movieListAdapter;
 
-    private RecyclerView movieListView;
-    private ProgressBar progressIndicator;
-    private TextView errorDisplay;
-    private ImageButton retryButton;
+    @BindView(R.id.recycler_view_movie_list) RecyclerView movieListView;
+    @BindView(R.id.progress_indicator) ProgressBar progressIndicator;
+    @BindView(R.id.text_view_error_message) TextView errorDisplay;
+    @BindView(R.id.button_retry) ImageButton retryButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.movie_list_activity);
+        ButterKnife.bind(this);
         initialize();
     }
 
     private void initialize() {
         this.moviesListPresenter = new MoviesListPresenter();
         setupRecyclerView();
-        progressIndicator = (ProgressBar) findViewById(R.id.progress_indicator);
-        errorDisplay = (TextView) findViewById(R.id.text_view_error_message);
-        retryButton = (ImageButton) findViewById(R.id.button_retry);
     }
 
     private void setupRecyclerView() {
         final int NUMBER_OF_COLUMNS_IN_GRID = 2;
-        movieListView = (RecyclerView) findViewById(R.id.recycler_view_movie_list);
 
         GridLayoutManager layoutManager = new GridLayoutManager(this, NUMBER_OF_COLUMNS_IN_GRID);
         movieListAdapter = new MovieListAdapter(MovieListActivity.this, MovieListActivity.this);

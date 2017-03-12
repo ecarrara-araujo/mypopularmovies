@@ -15,6 +15,8 @@ import com.squareup.picasso.Picasso;
 import br.com.ecarrara.popularmovies.R;
 import br.com.ecarrara.popularmovies.movies.presentation.presenter.MovieDetailPresenter;
 import br.com.ecarrara.popularmovies.movies.presentation.model.MovieDetailViewModel;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -24,17 +26,17 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     private int movieId;
     private MovieDetailPresenter movieDetailPresenter;
 
-    private ProgressBar progressIndicator;
-    private ViewGroup errorDisplay;
-    private TextView errorTextDisplay;
-    private ImageButton retryButton;
+    @BindView(R.id.progress_indicator) ProgressBar progressIndicator;
+    @BindView(R.id.error_display) ViewGroup errorDisplay;
+    @BindView(R.id.text_view_error_message) TextView errorTextDisplay;
+    @BindView(R.id.button_retry) ImageButton retryButton;
 
-    private ViewGroup movieDetailContent;
-    private ImageView moviePosterImageView;
-    private TextView movieTitleTextView;
-    private TextView movieReleaseDateTextView;
-    private TextView movieSynopsisTextView;
-    private RatingBar movieRatingBar;
+    @BindView(R.id.movie_detail_content) ViewGroup movieDetailContent;
+    @BindView(R.id.movie_poster_image_view) ImageView moviePosterImageView;
+    @BindView(R.id.movie_title_text_view) TextView movieTitleTextView;
+    @BindView(R.id.movie_release_date_text_view) TextView movieReleaseDateTextView;
+    @BindView(R.id.movie_synopsis_text_view) TextView movieSynopsisTextView;
+    @BindView(R.id.movie_rating_bar) RatingBar movieRatingBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,18 +48,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     private void initialize() {
         processBundle();
         this.movieDetailPresenter = new MovieDetailPresenter(this.movieId);
-
-        progressIndicator = (ProgressBar) findViewById(R.id.progress_indicator);
-        errorDisplay = (ViewGroup) findViewById(R.id.error_display);
-        errorTextDisplay = (TextView) findViewById(R.id.text_view_error_message);
-        retryButton = (ImageButton) findViewById(R.id.button_retry);
-
-        movieDetailContent = (ViewGroup) findViewById(R.id.movie_detail_content);
-        moviePosterImageView = (ImageView) findViewById(R.id.movie_poster_image_view);
-        movieTitleTextView = (TextView) findViewById(R.id.movie_title_text_view);
-        movieReleaseDateTextView = (TextView) findViewById(R.id.movie_release_date_text_view);
-        movieRatingBar = (RatingBar) findViewById(R.id.movie_rating_bar);
-        movieSynopsisTextView = (TextView) findViewById(R.id.movie_synopsis_text_view);
+        ButterKnife.bind(this);
     }
 
     private void processBundle() {
