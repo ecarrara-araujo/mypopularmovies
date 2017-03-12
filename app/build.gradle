@@ -47,8 +47,8 @@ dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
 
     // Android Support Libraries
-    compile 'com.android.support:appcompat-v7:25.1.0'
-    compile 'com.android.support:recyclerview-v7:25.1.0'
+    compile 'com.android.support:appcompat-v7:25.2.0'
+    compile 'com.android.support:recyclerview-v7:25.2.0'
 
     // Networking Libs
     compile 'com.google.code.gson:gson:2.8.0'
