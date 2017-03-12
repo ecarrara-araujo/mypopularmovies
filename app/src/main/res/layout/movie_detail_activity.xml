@@ -111,12 +111,16 @@
                 android:textStyle="bold"
                 android:text="@string/synopsis"/>
 
-            <TextView
-                android:id="@+id/movie_synopsis_text_view"
+            <android.support.v4.widget.NestedScrollView
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
-                tools:text="Loren ipsum wololo very long text....."/>
+                android:layout_weight="1">
+                <TextView
+                    android:id="@+id/movie_synopsis_text_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    tools:text="Loren ipsum wololo wololo wololo wololo very long text....."/>
+            </android.support.v4.widget.NestedScrollView>
 
         </LinearLayout>
 
