@@ -15,6 +15,7 @@ import com.squareup.picasso.Picasso;
 import br.com.ecarrara.popularmovies.R;
 import br.com.ecarrara.popularmovies.movies.presentation.presenter.MovieDetailPresenter;
 import br.com.ecarrara.popularmovies.movies.presentation.model.MovieDetailViewModel;
+import br.com.ecarrara.popularmovies.trailers.presentation.view.TrailerListFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -49,12 +50,21 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
         processBundle();
         this.movieDetailPresenter = new MovieDetailPresenter(this.movieId);
         ButterKnife.bind(this);
+        setUpMovieTrailersView();
     }
 
     private void processBundle() {
         final Intent movieDetailIntent = getIntent();
         this.movieId = movieDetailIntent.getIntExtra(MovieDetailView.MOVIE_ID_KEY,
                 MovieDetailView.NO_MOVIE_ID);
+    }
+
+    private void setUpMovieTrailersView() {
+        TrailerListFragment trailerListFragment = TrailerListFragment.newInstance(this.movieId);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.movie_trailer_container, trailerListFragment)
+                .commit();
     }
 
     @Override

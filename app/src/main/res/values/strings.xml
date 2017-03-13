@@ -6,4 +6,6 @@
     <string name="most_popular">Most Popular</string>
     <string name="synopsis">Synopsis</string>
     <string name="rating">Rating</string>
+    <string name="play_trailer_button">play trailer button</string>
+    <string name="error_fetching_movie_trailers">Error fetching movie trailers</string>
 </resources>

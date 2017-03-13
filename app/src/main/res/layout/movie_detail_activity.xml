@@ -115,11 +115,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1">
-                <TextView
-                    android:id="@+id/movie_synopsis_text_view"
+                <LinearLayout
+                    android:orientation="vertical"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    tools:text="Loren ipsum wololo wololo wololo wololo very long text....."/>
+                    android:layout_height="wrap_content">
+                    <TextView
+                        android:id="@+id/movie_synopsis_text_view"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        tools:text="Loren ipsum wololo wololo wololo wololo very long text....."/>
+                    <FrameLayout
+                        android:id="@+id/movie_trailer_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
             </android.support.v4.widget.NestedScrollView>
 
         </LinearLayout>
