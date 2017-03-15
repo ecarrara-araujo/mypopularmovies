@@ -1,7 +1,5 @@
 package br.com.ecarrara.popularmovies.trailers.presentation.view;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -16,6 +14,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import br.com.ecarrara.popularmovies.R;
+import br.com.ecarrara.popularmovies.trailers.player.TrailerPlayer;
 import br.com.ecarrara.popularmovies.trailers.presentation.model.TrailerListItemViewModel;
 import br.com.ecarrara.popularmovies.trailers.presentation.presenter.TrailerListPresenter;
 import butterknife.BindView;
@@ -160,11 +159,16 @@ public class TrailerListFragment extends Fragment
 
     @Override
     public void playTrailer(String site, String key) {
-
+        try {
+            TrailerPlayer.playTrailer(getContext(), site, key);
+        } catch (Exception exception) {
+            hideContent();
+            showError(exception.getMessage());
+        }
     }
 
     @Override
-    public void onTrailerSelected(String key, String site) {
-        playTrailer(site, key);
+    public void onTrailerSelected(String site, String key) {
+        this.trailerListPresenter.trailerSelected(site, key);
     }
 }

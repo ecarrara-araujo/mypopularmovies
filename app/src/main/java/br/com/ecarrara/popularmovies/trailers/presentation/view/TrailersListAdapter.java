@@ -22,7 +22,7 @@ public class TrailersListAdapter extends RecyclerView.Adapter<TrailersListAdapte
     private TrailerSelectedListener trailerSelectedListener;
 
     interface TrailerSelectedListener {
-        void onTrailerSelected(String key, String site);
+        void onTrailerSelected(String site, String key);
     }
 
     public TrailersListAdapter(Context parentContext,
@@ -72,7 +72,7 @@ public class TrailersListAdapter extends RecyclerView.Adapter<TrailersListAdapte
                     getAdapterPosition()
             );
             TrailersListAdapter.this.trailerSelectedListener.onTrailerSelected(
-                    clickedItem.key(), clickedItem.site()
+                    clickedItem.site(), clickedItem.key()
             );
         }
     }

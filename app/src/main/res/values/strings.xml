@@ -8,4 +8,5 @@
     <string name="rating">Rating</string>
     <string name="play_trailer_button">play trailer button</string>
     <string name="error_fetching_movie_trailers">Error fetching movie trailers</string>
+    <string name="trailer_player_chooser_title">Play trailer on …</string>
 </resources>
