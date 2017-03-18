@@ -28,4 +28,9 @@
     <dimen name="trailer_list_item_title_text_padding_left">16dp</dimen>
     <dimen name="trailer_list_item_title_text_padding_right">@dimen/trailer_list_item_title_text_padding_left</dimen>
 
+    <!-- Movie Review List Item -->
+    <dimen name="movie_review_list_item_margin">16dp</dimen>
+    <dimen name="movie_review_list_item_card_corner_radius">4dp</dimen>
+    <dimen name="movie_review_list_item_author_padding_botton">8dp</dimen>
+
 </resources>

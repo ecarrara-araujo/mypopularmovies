@@ -128,6 +128,10 @@
                         android:id="@+id/movie_trailer_container"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"/>
+                    <FrameLayout
+                        android:id="@+id/movie_reviews_container"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
             </android.support.v4.widget.NestedScrollView>
 

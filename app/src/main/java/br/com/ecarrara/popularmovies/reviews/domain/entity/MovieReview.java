@@ -10,10 +10,10 @@ public abstract class MovieReview {
     public static final String NO_CONTENT = "";
     public static final String NO_URL = "";
 
-    abstract String id();
-    abstract String author();
-    abstract String content();
-    abstract String url();
+    public abstract String id();
+    public abstract String author();
+    public abstract String content();
+    public abstract String url();
 
     public static class Builder {
 
