@@ -10,7 +10,7 @@
     android:paddingEnd="@dimen/trailer_list_item_padding_right">
 
     <ImageView
-        android:src="@drawable/art_play_circle_outline_48dp"
+        tools:srcCompat="@drawable/art_play_circle_outline_48dp"
         android:contentDescription="@string/play_trailer_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
