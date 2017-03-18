@@ -13,6 +13,8 @@ import java.util.List;
 
 import br.com.ecarrara.popularmovies.R;
 import br.com.ecarrara.popularmovies.movies.presentation.model.MovieListItemViewModel;
+import butterknife.BindView;
+import butterknife.ButterKnife;
 
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.ViewHolder> {
 
@@ -57,11 +59,12 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     }
 
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
-        final ImageView moviePoster;
+
+        @BindView(R.id.image_view_movie_poster) ImageView moviePoster;
 
         public ViewHolder(View itemView) {
             super(itemView);
-            moviePoster =(ImageView) itemView.findViewById(R.id.image_view_movie_poster);
+            ButterKnife.bind(this, itemView);
             moviePoster.setOnClickListener(ViewHolder.this);
         }
 

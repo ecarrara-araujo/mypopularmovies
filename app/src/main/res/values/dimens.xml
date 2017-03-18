@@ -20,4 +20,12 @@
     <dimen name="movie_detail_view_padding_top">16dp</dimen>
     <dimen name="movie_detail_view_padding_bottom">@dimen/movie_detail_view_padding_top</dimen>
 
+    <!-- Trailers List Item -->
+    <dimen name="trailer_list_item_padding_left">8dp</dimen>
+    <dimen name="trailer_list_item_padding_right">@dimen/trailer_list_item_padding_left</dimen>
+    <dimen name="trailer_list_item_padding_top">16dp</dimen>
+    <dimen name="trailer_list_item_padding_bottom">0dp</dimen>
+    <dimen name="trailer_list_item_title_text_padding_left">16dp</dimen>
+    <dimen name="trailer_list_item_title_text_padding_right">@dimen/trailer_list_item_title_text_padding_left</dimen>
+
 </resources>
