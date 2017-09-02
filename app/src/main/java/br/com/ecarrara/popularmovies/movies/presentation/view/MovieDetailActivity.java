@@ -1,6 +1,7 @@
 package br.com.ecarrara.popularmovies.movies.presentation.view;
 
 import android.content.Intent;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.ViewGroup;
@@ -51,6 +52,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
         processBundle();
         this.movieDetailPresenter = new MovieDetailPresenter(this.movieId);
         ButterKnife.bind(this);
+        setUpActionBar();
         setUpMovieTrailersView();
         setUpMovieReviewsView();
     }
@@ -59,6 +61,13 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
         final Intent movieDetailIntent = getIntent();
         this.movieId = movieDetailIntent.getIntExtra(MovieDetailView.MOVIE_ID_KEY,
                 MovieDetailView.NO_MOVIE_ID);
+    }
+
+    private void setUpActionBar() {
+        ActionBar actionBar = getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayHomeAsUpEnabled(true);
+        }
     }
 
     private void setUpMovieTrailersView() {
