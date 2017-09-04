@@ -1,11 +1,11 @@
-package br.com.ecarrara.popularmovies.movies.data.repository.datasource.rest.mapper;
+package br.com.ecarrara.popularmovies.movies.data.datasource.rest.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import br.com.ecarrara.popularmovies.core.networking.rest.RestDateMapper;
-import br.com.ecarrara.popularmovies.movies.data.repository.datasource.rest.json.MovieDetailResponse;
-import br.com.ecarrara.popularmovies.movies.data.repository.datasource.rest.json.Result;
+import br.com.ecarrara.popularmovies.movies.data.datasource.rest.json.MovieDetailResponse;
+import br.com.ecarrara.popularmovies.movies.data.datasource.rest.json.Result;
 import br.com.ecarrara.popularmovies.movies.domain.entity.Movie;
 
 public class RestMovieMapper {

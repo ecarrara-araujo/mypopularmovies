@@ -1,24 +1,26 @@
-package br.com.ecarrara.popularmovies.movies.data.repository.datasource.rest;
+package br.com.ecarrara.popularmovies.movies.data.datasource.rest;
 
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.util.List;
 
 import br.com.ecarrara.popularmovies.core.networking.rest.RestApiConnection;
-import br.com.ecarrara.popularmovies.movies.data.repository.datasource.rest.json.Response;
+import br.com.ecarrara.popularmovies.movies.domain.entity.Movie;
 import br.com.ecarrara.popularmovies.testdata.movies.PopularMoviesTestData;
 import io.reactivex.observers.TestObserver;
 import okhttp3.mockwebserver.MockResponse;
 import okhttp3.mockwebserver.MockWebServer;
 
-public class PopularMoviesApiTest {
+public class PopularMoviesRestApiDataSourceTest {
 
-    private Response expectedResponseObject = PopularMoviesTestData.RESPONSE_OBJECT;
-    private String responseJson = PopularMoviesTestData.RESPONSE_JSON;
-    private RestApiConnection restApiConnection;
+    private final List<Movie> expectedMovieList = PopularMoviesTestData.POPULAR_MOVIES_LIST;
+    private final String responseJson = PopularMoviesTestData.RESPONSE_JSON;
     private MockWebServer server;
+    private RestApiConnection restApiConnection;
+    private MoviesRestApiDataSource moviesRestApiDataSource;
 
     @Before
     public void setUp() throws IOException {
@@ -29,6 +31,7 @@ public class PopularMoviesApiTest {
         );
         server.start();
         restApiConnection = new RestApiConnection(server.url("/").toString());
+        moviesRestApiDataSource = new MoviesRestApiDataSource(restApiConnection);
     }
 
     @After
@@ -37,14 +40,14 @@ public class PopularMoviesApiTest {
     }
 
     @Test
-    public void sucessfulListPopularMovies() throws Exception {
-        TestObserver<Response> testObserver = new TestObserver<>();
+    public void successfulListPopularMovies() throws Exception {
+        TestObserver<List<Movie>> testObserver = new TestObserver<>();
 
-        restApiConnection.connectTo(MoviesRestApi.class)
-                .getPopularMovies()
+        moviesRestApiDataSource
+                .listPopularMovies()
                 .subscribe(testObserver);
 
-        testObserver.assertResult(this.expectedResponseObject);
+        testObserver.assertResult(expectedMovieList);
     }
 
 }

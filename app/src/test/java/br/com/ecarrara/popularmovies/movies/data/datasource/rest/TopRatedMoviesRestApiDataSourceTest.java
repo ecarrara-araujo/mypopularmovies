@@ -1,4 +1,4 @@
-package br.com.ecarrara.popularmovies.movies.data.repository.datasource.rest;
+package br.com.ecarrara.popularmovies.movies.data.datasource.rest;
 
 import org.junit.After;
 import org.junit.Before;
@@ -9,7 +9,6 @@ import java.util.List;
 
 import br.com.ecarrara.popularmovies.core.networking.rest.RestApiConnection;
 import br.com.ecarrara.popularmovies.movies.domain.entity.Movie;
-import br.com.ecarrara.popularmovies.testdata.movies.PopularMoviesTestData;
 import br.com.ecarrara.popularmovies.testdata.movies.TopRatedMoviesTestData;
 import io.reactivex.observers.TestObserver;
 import okhttp3.mockwebserver.MockResponse;

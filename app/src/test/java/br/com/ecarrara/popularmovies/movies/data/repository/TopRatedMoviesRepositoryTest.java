@@ -9,9 +9,10 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.io.IOException;
 import java.util.List;
 
-import br.com.ecarrara.popularmovies.movies.data.repository.datasource.MoviesDataSource;
+import br.com.ecarrara.popularmovies.movies.data.MoviesRepositoryImpl;
+import br.com.ecarrara.popularmovies.movies.data.datasource.MoviesDataSource;
+import br.com.ecarrara.popularmovies.movies.domain.MoviesRepository;
 import br.com.ecarrara.popularmovies.movies.domain.entity.Movie;
-import br.com.ecarrara.popularmovies.testdata.movies.PopularMoviesTestData;
 import br.com.ecarrara.popularmovies.testdata.movies.TopRatedMoviesTestData;
 import io.reactivex.Single;
 import io.reactivex.observers.TestObserver;

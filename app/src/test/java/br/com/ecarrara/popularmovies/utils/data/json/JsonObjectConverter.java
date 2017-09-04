@@ -5,7 +5,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
 import br.com.ecarrara.popularmovies.core.utils.gson.AutoValuesGsonAdapterFactory;
-import br.com.ecarrara.popularmovies.movies.data.repository.datasource.rest.json.Response;
 
 public class JsonObjectConverter {
     private static final String API_DATE_FORMAT = "yyyy-MM-dd";

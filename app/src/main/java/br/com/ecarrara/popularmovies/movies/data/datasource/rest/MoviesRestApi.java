@@ -1,7 +1,7 @@
-package br.com.ecarrara.popularmovies.movies.data.repository.datasource.rest;
+package br.com.ecarrara.popularmovies.movies.data.datasource.rest;
 
-import br.com.ecarrara.popularmovies.movies.data.repository.datasource.rest.json.MovieDetailResponse;
-import br.com.ecarrara.popularmovies.movies.data.repository.datasource.rest.json.Response;
+import br.com.ecarrara.popularmovies.movies.data.datasource.rest.json.MovieDetailResponse;
+import br.com.ecarrara.popularmovies.movies.data.datasource.rest.json.Response;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import retrofit2.http.GET;

@@ -1,8 +1,8 @@
 package br.com.ecarrara.popularmovies.movies.presentation.presenter;
 
 import br.com.ecarrara.popularmovies.core.presentation.Presenter;
-import br.com.ecarrara.popularmovies.movies.data.repository.MoviesRepository;
-import br.com.ecarrara.popularmovies.movies.data.repository.MoviesRepositoryImpl;
+import br.com.ecarrara.popularmovies.movies.domain.MoviesRepository;
+import br.com.ecarrara.popularmovies.movies.data.MoviesRepositoryImpl;
 import br.com.ecarrara.popularmovies.movies.presentation.model.MovieDetailViewModel;
 import br.com.ecarrara.popularmovies.movies.presentation.model.MovieDetailViewModelMapper;
 import br.com.ecarrara.popularmovies.movies.presentation.view.MovieDetailView;
