@@ -1,4 +1,4 @@
-package br.com.ecarrara.popularmovies.reviews.data.repository.datasource.rest.json;
+package br.com.ecarrara.popularmovies.reviews.data.datasource.rest.json;
 
 import com.google.auto.value.AutoValue;
 import com.google.gson.Gson;

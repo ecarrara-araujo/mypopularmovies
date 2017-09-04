@@ -1,12 +1,12 @@
-package br.com.ecarrara.popularmovies.reviews.data.repository.datasource.rest;
+package br.com.ecarrara.popularmovies.reviews.data.datasource.rest;
 
 import java.util.List;
 
 import br.com.ecarrara.popularmovies.core.networking.rest.RestApiConnection;
 import br.com.ecarrara.popularmovies.core.networking.rest.RestConfigs;
-import br.com.ecarrara.popularmovies.reviews.data.repository.datasource.MovieReviewsDataSource;
-import br.com.ecarrara.popularmovies.reviews.data.repository.datasource.rest.json.MovieReviewsResponse;
-import br.com.ecarrara.popularmovies.reviews.data.repository.datasource.rest.mapper.RestReviewMapper;
+import br.com.ecarrara.popularmovies.reviews.data.datasource.MovieReviewsDataSource;
+import br.com.ecarrara.popularmovies.reviews.data.datasource.rest.json.MovieReviewsResponse;
+import br.com.ecarrara.popularmovies.reviews.data.datasource.rest.mapper.RestReviewMapper;
 import br.com.ecarrara.popularmovies.reviews.domain.entity.MovieReview;
 import io.reactivex.Single;
 

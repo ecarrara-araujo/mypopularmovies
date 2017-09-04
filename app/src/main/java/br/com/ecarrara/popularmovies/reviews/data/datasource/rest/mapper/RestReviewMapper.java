@@ -1,9 +1,9 @@
-package br.com.ecarrara.popularmovies.reviews.data.repository.datasource.rest.mapper;
+package br.com.ecarrara.popularmovies.reviews.data.datasource.rest.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.ecarrara.popularmovies.reviews.data.repository.datasource.rest.json.MovieReviewResult;
+import br.com.ecarrara.popularmovies.reviews.data.datasource.rest.json.MovieReviewResult;
 import br.com.ecarrara.popularmovies.reviews.domain.entity.MovieReview;
 
 public class RestReviewMapper {
