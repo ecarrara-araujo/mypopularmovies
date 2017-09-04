@@ -1,4 +1,4 @@
-package br.com.ecarrara.popularmovies.trailers.data.repository;
+package br.com.ecarrara.popularmovies.trailers.domain;
 
 import java.util.List;
 

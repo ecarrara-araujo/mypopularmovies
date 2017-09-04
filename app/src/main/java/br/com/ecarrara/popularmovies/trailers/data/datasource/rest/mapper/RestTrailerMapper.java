@@ -1,9 +1,9 @@
-package br.com.ecarrara.popularmovies.trailers.data.repository.datasource.rest.mapper;
+package br.com.ecarrara.popularmovies.trailers.data.datasource.rest.mapper;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.ecarrara.popularmovies.trailers.data.repository.datasource.rest.json.MovieTrailersResult;
+import br.com.ecarrara.popularmovies.trailers.data.datasource.rest.json.MovieTrailersResult;
 import br.com.ecarrara.popularmovies.trailers.domain.entity.Trailer;
 
 public class RestTrailerMapper {

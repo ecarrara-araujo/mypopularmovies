@@ -1,4 +1,4 @@
-package br.com.ecarrara.popularmovies.trailers.data.repository.datasource;
+package br.com.ecarrara.popularmovies.trailers.data.datasource;
 
 import java.util.List;
 

@@ -1,12 +1,12 @@
-package br.com.ecarrara.popularmovies.trailers.data.repository.datasource.rest;
+package br.com.ecarrara.popularmovies.trailers.data.datasource.rest;
 
 import java.util.List;
 
 import br.com.ecarrara.popularmovies.core.networking.rest.RestApiConnection;
 import br.com.ecarrara.popularmovies.core.networking.rest.RestConfigs;
-import br.com.ecarrara.popularmovies.trailers.data.repository.datasource.TrailersDataSource;
-import br.com.ecarrara.popularmovies.trailers.data.repository.datasource.rest.json.MovieTrailersResponse;
-import br.com.ecarrara.popularmovies.trailers.data.repository.datasource.rest.mapper.RestTrailerMapper;
+import br.com.ecarrara.popularmovies.trailers.data.datasource.TrailersDataSource;
+import br.com.ecarrara.popularmovies.trailers.data.datasource.rest.json.MovieTrailersResponse;
+import br.com.ecarrara.popularmovies.trailers.data.datasource.rest.mapper.RestTrailerMapper;
 import br.com.ecarrara.popularmovies.trailers.domain.entity.Trailer;
 import io.reactivex.Single;
 

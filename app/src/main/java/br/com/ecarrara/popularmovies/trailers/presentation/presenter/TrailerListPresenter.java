@@ -3,8 +3,8 @@ package br.com.ecarrara.popularmovies.trailers.presentation.presenter;
 import java.util.List;
 
 import br.com.ecarrara.popularmovies.core.presentation.Presenter;
-import br.com.ecarrara.popularmovies.trailers.data.repository.TrailersRepository;
-import br.com.ecarrara.popularmovies.trailers.data.repository.TrailersRepositoryImpl;
+import br.com.ecarrara.popularmovies.trailers.domain.TrailersRepository;
+import br.com.ecarrara.popularmovies.trailers.data.TrailersRepositoryImpl;
 import br.com.ecarrara.popularmovies.trailers.presentation.model.TrailerListItemViewModel;
 import br.com.ecarrara.popularmovies.trailers.presentation.model.TrailerListItemViewModelMapper;
 import br.com.ecarrara.popularmovies.trailers.presentation.view.TrailersListView;
