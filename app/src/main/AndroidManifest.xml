@@ -10,6 +10,13 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <provider
+            android:name=".favorites.data.datasource.contentprovider.FavoritesProvider"
+            android:authorities="br.com.ecarrara.popularmovies"
+            android:enabled="true"
+            android:exported="false" />
+
         <activity android:name=".movies.presentation.view.MovieListActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -17,6 +24,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity android:name=".movies.presentation.view.MovieDetailActivity"
             android:parentActivityName=".movies.presentation.view.MovieListActivity"/>
     </application>
