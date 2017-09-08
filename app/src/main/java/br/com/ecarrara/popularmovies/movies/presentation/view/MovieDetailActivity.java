@@ -42,7 +42,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     @BindView(R.id.movie_title_text_view) TextView movieTitleTextView;
     @BindView(R.id.movie_release_date_text_view) TextView movieReleaseDateTextView;
     @BindView(R.id.movie_synopsis_text_view) TextView movieSynopsisTextView;
-    @BindView(R.id.movie_rating_bar) RatingBar movieRatingBar;
+    @BindView(R.id.movie_rating_text_view) TextView movieRatingTextView;
 
     private int movieId;
 
@@ -108,7 +108,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
         showContent();
         movieTitleTextView.setText(movieDetailViewModel.title());
         movieReleaseDateTextView.setText(movieDetailViewModel.releaseDate());
-        movieRatingBar.setRating(movieDetailViewModel.voteAverage().floatValue());
+        movieRatingTextView.setText(getString(R.string.movie_detail_rating_format, movieDetailViewModel.voteAverage()));
         movieSynopsisTextView.setText(movieDetailViewModel.plotSynopsis());
 
         Picasso.with(MovieDetailActivity.this)
