@@ -14,11 +14,6 @@ public class TrailersRepositoryImpl implements TrailersRepository {
 
     private TrailersDataSource trailersDataSource;
 
-    public TrailersRepositoryImpl() {
-        this.trailersDataSource =
-                new TrailersRestApiDataSource(new RestApiConnection(RestConfigs.SERVER_URL));
-    }
-
     public TrailersRepositoryImpl(TrailersDataSource trailersDataSource) {
         this.trailersDataSource = trailersDataSource;
     }

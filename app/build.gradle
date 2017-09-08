@@ -15,6 +15,7 @@ final String THE_MOVIE_DB_API_KEY_NAME = "THE_MOVIE_DB_API_KEY"
 
 ext {
     ANDROID_SUPPORT_LIBS_VERSION = '26.0.1'
+    DAGGER_VERSION = '2.10'
 }
 
 android {
@@ -78,6 +79,10 @@ dependencies {
     // Dependency Injection
     compile 'com.jakewharton:butterknife:8.5.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+
+    compile "com.google.dagger:dagger:${DAGGER_VERSION}"
+    annotationProcessor "com.google.dagger:dagger-compiler:${DAGGER_VERSION}"
+
 
     // Test Dependencies
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {

@@ -14,11 +14,6 @@ public class MovieReviewsRepositoryImpl implements MovieReviewsRepository {
 
     private MovieReviewsDataSource movieReviewsDataSource;
 
-    public MovieReviewsRepositoryImpl()  {
-        this.movieReviewsDataSource =
-                new MovieReviewsRestApiDataSource(new RestApiConnection(RestConfigs.SERVER_URL));
-    }
-
     public MovieReviewsRepositoryImpl(MovieReviewsDataSource movieReviewsDataSource) {
         this.movieReviewsDataSource = movieReviewsDataSource;
     }

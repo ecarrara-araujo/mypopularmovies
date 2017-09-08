@@ -9,6 +9,8 @@ import android.net.Uri;
 import java.util.Collections;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import br.com.ecarrara.popularmovies.favorites.data.datasource.contentprovider.FavoritesContract.FavoriteEntry;
 import br.com.ecarrara.popularmovies.favorites.domain.data.FavoritesLocalDataSource;
 import br.com.ecarrara.popularmovies.favorites.domain.entity.Favorite;
@@ -20,6 +22,7 @@ public class FavoritesProviderLocalDataSource implements FavoritesLocalDataSourc
 
     private Context applicationContext;
 
+    @Inject
     public FavoritesProviderLocalDataSource(Context applicationContext) {
         this.applicationContext = applicationContext;
     }

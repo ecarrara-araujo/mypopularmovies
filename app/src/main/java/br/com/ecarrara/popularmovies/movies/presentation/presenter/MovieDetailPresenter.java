@@ -1,8 +1,11 @@
 package br.com.ecarrara.popularmovies.movies.presentation.presenter;
 
+import javax.inject.Inject;
+
 import br.com.ecarrara.popularmovies.core.presentation.Presenter;
 import br.com.ecarrara.popularmovies.movies.domain.MoviesRepository;
 import br.com.ecarrara.popularmovies.movies.data.MoviesRepositoryImpl;
+import br.com.ecarrara.popularmovies.movies.domain.entity.Movie;
 import br.com.ecarrara.popularmovies.movies.presentation.model.MovieDetailViewModel;
 import br.com.ecarrara.popularmovies.movies.presentation.model.MovieDetailViewModelMapper;
 import br.com.ecarrara.popularmovies.movies.presentation.view.MovieDetailView;
@@ -10,7 +13,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class MovieDetailPresenter implements Presenter<MovieDetailView> {
+public class MovieDetailPresenter implements Presenter<MovieDetailView, Integer> {
 
     private MoviesRepository moviesRepository;
     private Disposable movieDetailDisposable;
@@ -18,12 +21,8 @@ public class MovieDetailPresenter implements Presenter<MovieDetailView> {
     private int movieId;
     private MovieDetailView movieDetailView;
 
-    public MovieDetailPresenter(int movieId) {
-        this(movieId, new MoviesRepositoryImpl());
-    }
-
-    public MovieDetailPresenter(int movieId, MoviesRepository moviesRepository) {
-        this.movieId = movieId;
+    @Inject
+    public MovieDetailPresenter(MoviesRepository moviesRepository) {
         this.moviesRepository = moviesRepository;
     }
 
@@ -40,7 +39,13 @@ public class MovieDetailPresenter implements Presenter<MovieDetailView> {
 
     @Override
     public void attachTo(MovieDetailView view) {
+        attachTo(view, Movie.INVALID_ID);
+    }
+
+    @Override
+    public void attachTo(MovieDetailView view, Integer data) {
         this.movieDetailView = view;
+        this.movieId = data;
         displayMovieDetail();
     }
 

@@ -13,7 +13,10 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import br.com.ecarrara.popularmovies.R;
+import br.com.ecarrara.popularmovies.core.di.Injector;
 import br.com.ecarrara.popularmovies.movies.presentation.presenter.MoviesListPresenter;
 import br.com.ecarrara.popularmovies.movies.presentation.model.MovieListItemViewModel;
 import butterknife.BindView;
@@ -25,7 +28,8 @@ import static android.view.View.VISIBLE;
 public class MovieListActivity extends AppCompatActivity
         implements MovieListView, MovieListAdapter.MovieSelectedListener {
 
-    private MoviesListPresenter moviesListPresenter;
+    @Inject MoviesListPresenter moviesListPresenter;
+
     private MovieListAdapter movieListAdapter;
 
     @BindView(R.id.recycler_view_movie_list) RecyclerView movieListView;
@@ -42,7 +46,7 @@ public class MovieListActivity extends AppCompatActivity
     }
 
     private void initialize() {
-        this.moviesListPresenter = new MoviesListPresenter();
+        Injector.applicationComponent().inject(this);
         setupRecyclerView();
     }
 

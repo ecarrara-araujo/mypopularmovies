@@ -14,7 +14,10 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import br.com.ecarrara.popularmovies.R;
+import br.com.ecarrara.popularmovies.core.di.Injector;
 import br.com.ecarrara.popularmovies.reviews.presentation.model.MovieReviewListItemViewModel;
 import br.com.ecarrara.popularmovies.reviews.presentation.presenter.MovieReviewsListPresenter;
 import br.com.ecarrara.popularmovies.trailers.presentation.view.TrailersListAdapter;
@@ -27,6 +30,8 @@ import static android.view.View.VISIBLE;
 public class MovieReviewsFragment extends Fragment
     implements MovieReviewsListView, MovieReviewsAdapter.MovieReviewSelectedListener {
 
+    @Inject MovieReviewsListPresenter movieReviewsListPresenter;
+
     @BindView(R.id.recycler_view_movie_reviews_list) RecyclerView movieReviesListView;
     @BindView(R.id.progress_indicator) ProgressBar progressIndicator;
     @BindView(R.id.text_view_error_message) TextView errorDisplay;
@@ -35,7 +40,6 @@ public class MovieReviewsFragment extends Fragment
     private static final String ARGUMENT_MOVIE_ID = "movie_id";
     private static final int INVALID_MOVIE_ID = -1;
 
-    private MovieReviewsListPresenter movieReviewsListPresenter;
     private MovieReviewsAdapter movieReviewsAdapter;
 
     private int movieId = INVALID_MOVIE_ID;
@@ -80,7 +84,7 @@ public class MovieReviewsFragment extends Fragment
     }
 
     private void initialize() {
-        this.movieReviewsListPresenter = new MovieReviewsListPresenter(movieId);
+        Injector.applicationComponent().inject(this);
         setupRecyclerView();
     }
 
@@ -96,7 +100,7 @@ public class MovieReviewsFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
-        this.movieReviewsListPresenter.attachTo(this);
+        this.movieReviewsListPresenter.attachTo(this, this.movieId);
     }
 
     @Override
