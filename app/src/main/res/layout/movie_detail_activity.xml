@@ -91,6 +91,12 @@
                     android:textStyle="bold"
                     tools:text="5.8" />
 
+                <CheckBox
+                    android:id="@+id/movie_add_to_favorites_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/favorites_add_button_background_state_selector" />
+
             </LinearLayout>
 
         </LinearLayout>

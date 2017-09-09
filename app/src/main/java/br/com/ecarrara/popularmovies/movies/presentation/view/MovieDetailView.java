@@ -6,4 +6,5 @@ import br.com.ecarrara.popularmovies.movies.presentation.model.MovieDetailViewMo
 public interface MovieDetailView extends LoadDataView {
     String MOVIE_ID_KEY = "MOVIE_ID";
     void displayMovieDetail(MovieDetailViewModel movieDetailViewModel);
+    void setAddToFavoritesStateTo(boolean isOnFavorites);
 }

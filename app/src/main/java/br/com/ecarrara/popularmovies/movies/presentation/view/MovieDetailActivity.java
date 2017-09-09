@@ -4,11 +4,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
@@ -24,6 +25,7 @@ import br.com.ecarrara.popularmovies.reviews.presentation.view.MovieReviewsFragm
 import br.com.ecarrara.popularmovies.trailers.presentation.view.TrailerListFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
@@ -43,6 +45,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     @BindView(R.id.movie_release_date_text_view) TextView movieReleaseDateTextView;
     @BindView(R.id.movie_synopsis_text_view) TextView movieSynopsisTextView;
     @BindView(R.id.movie_rating_text_view) TextView movieRatingTextView;
+    @BindView(R.id.movie_add_to_favorites_checkbox) CheckBox movieAddToFavoriteCheckBox;
 
     private int movieId;
 
@@ -110,11 +113,17 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
         movieReleaseDateTextView.setText(movieDetailViewModel.releaseDate());
         movieRatingTextView.setText(getString(R.string.movie_detail_rating_format, movieDetailViewModel.voteAverage()));
         movieSynopsisTextView.setText(movieDetailViewModel.plotSynopsis());
+        movieAddToFavoriteCheckBox.setChecked(movieDetailViewModel.isFavorite());
 
         Picasso.with(MovieDetailActivity.this)
                 .load(movieDetailViewModel.posterPath())
                 .fit()
                 .into(moviePosterImageView);
+    }
+
+    @Override
+    public void setAddToFavoritesStateTo(boolean isOnFavorites) {
+        movieAddToFavoriteCheckBox.setChecked(isOnFavorites);
     }
 
     @Override
@@ -162,5 +171,10 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
         hideError();
         hideRetry();
         movieDetailContent.setVisibility(VISIBLE);
+    }
+
+    @OnClick(R.id.movie_add_to_favorites_checkbox)
+    public void isFavoriteChanged(View view) {
+        movieDetailPresenter.favoriteStateChanged(movieAddToFavoriteCheckBox.isChecked());
     }
 }

@@ -15,10 +15,17 @@ public abstract class MovieDetailViewModel {
 
     public abstract String plotSynopsis();
 
+    public abstract boolean isFavorite();
+
     public abstract Builder toBuilder();
 
     public static Builder builder() {
-        return new AutoValue_MovieDetailViewModel.Builder();
+        return new AutoValue_MovieDetailViewModel.Builder()
+                .setIsFavorite(false);
+    }
+
+    public MovieDetailViewModel withIsFavorite(boolean isFavorite) {
+        return toBuilder().setIsFavorite(isFavorite).build();
     }
 
     @AutoValue.Builder
@@ -32,6 +39,8 @@ public abstract class MovieDetailViewModel {
         abstract Builder setVoteAverage(Double voteAverage);
 
         abstract Builder setPlotSynopsis(String plotSynopsis);
+
+        abstract Builder setIsFavorite(boolean isFavorite);
 
         abstract MovieDetailViewModel build();
     }
