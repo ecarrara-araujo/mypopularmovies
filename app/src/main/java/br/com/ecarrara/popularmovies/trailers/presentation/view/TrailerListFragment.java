@@ -13,7 +13,10 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import br.com.ecarrara.popularmovies.R;
+import br.com.ecarrara.popularmovies.core.di.Injector;
 import br.com.ecarrara.popularmovies.trailers.player.TrailerPlayer;
 import br.com.ecarrara.popularmovies.trailers.presentation.model.TrailerListItemViewModel;
 import br.com.ecarrara.popularmovies.trailers.presentation.presenter.TrailerListPresenter;
@@ -26,6 +29,8 @@ import static android.view.View.VISIBLE;
 public class TrailerListFragment extends Fragment
         implements TrailersListView, TrailersListAdapter.TrailerSelectedListener {
 
+    @Inject TrailerListPresenter trailerListPresenter;
+
     @BindView(R.id.recycler_view_trailer_list) RecyclerView trailerListView;
     @BindView(R.id.progress_indicator) ProgressBar progressIndicator;
     @BindView(R.id.text_view_error_message) TextView errorDisplay;
@@ -34,7 +39,6 @@ public class TrailerListFragment extends Fragment
     private static final String ARGUMENT_MOVIE_ID = "movie_id";
     private static final int INVALID_MOVIE_ID = -1;
 
-    private TrailerListPresenter trailerListPresenter;
     private TrailersListAdapter trailersListAdapter;
 
     private int movieId = INVALID_MOVIE_ID;
@@ -79,7 +83,7 @@ public class TrailerListFragment extends Fragment
     }
 
     private void initialize() {
-        this.trailerListPresenter = new TrailerListPresenter(movieId);
+        Injector.applicationComponent().inject(this);
         setupRecyclerView();
     }
 
@@ -95,7 +99,7 @@ public class TrailerListFragment extends Fragment
     @Override
     public void onResume() {
         super.onResume();
-        this.trailerListPresenter.attachTo(this);
+        this.trailerListPresenter.attachTo(this, this.movieId);
     }
 
     @Override

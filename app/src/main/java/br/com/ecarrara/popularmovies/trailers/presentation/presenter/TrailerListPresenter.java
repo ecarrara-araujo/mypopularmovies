@@ -2,9 +2,12 @@ package br.com.ecarrara.popularmovies.trailers.presentation.presenter;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import br.com.ecarrara.popularmovies.core.presentation.Presenter;
-import br.com.ecarrara.popularmovies.trailers.data.repository.TrailersRepository;
-import br.com.ecarrara.popularmovies.trailers.data.repository.TrailersRepositoryImpl;
+import br.com.ecarrara.popularmovies.movies.domain.entity.Movie;
+import br.com.ecarrara.popularmovies.trailers.domain.TrailersRepository;
+import br.com.ecarrara.popularmovies.trailers.data.TrailersRepositoryImpl;
 import br.com.ecarrara.popularmovies.trailers.presentation.model.TrailerListItemViewModel;
 import br.com.ecarrara.popularmovies.trailers.presentation.model.TrailerListItemViewModelMapper;
 import br.com.ecarrara.popularmovies.trailers.presentation.view.TrailersListView;
@@ -13,7 +16,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.disposables.Disposables;
 import io.reactivex.schedulers.Schedulers;
 
-public class TrailerListPresenter implements Presenter<TrailersListView> {
+public class TrailerListPresenter implements Presenter<TrailersListView, Integer> {
 
     private TrailersRepository trailersRepository;
     private TrailersListView trailersListView;
@@ -21,12 +24,8 @@ public class TrailerListPresenter implements Presenter<TrailersListView> {
 
     private int movieId;
 
-    public TrailerListPresenter(int movieId) {
-        this(movieId, new TrailersRepositoryImpl());
-    }
-
-    public TrailerListPresenter(int movieId, TrailersRepository trailersRepository) {
-        this.movieId = movieId;
+    @Inject
+    public TrailerListPresenter(TrailersRepository trailersRepository) {
         this.trailersRepository = trailersRepository;
     }
 
@@ -43,7 +42,13 @@ public class TrailerListPresenter implements Presenter<TrailersListView> {
 
     @Override
     public void attachTo(TrailersListView view) {
+        attachTo(view, Movie.INVALID_ID);
+    }
+
+    @Override
+    public void attachTo(TrailersListView view, Integer data) {
         this.trailersListView = view;
+        this.movieId = data;
         displayMovieTrailers();
     }
 

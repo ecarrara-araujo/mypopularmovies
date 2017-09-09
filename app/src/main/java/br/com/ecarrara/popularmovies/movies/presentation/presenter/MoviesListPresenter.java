@@ -2,9 +2,11 @@ package br.com.ecarrara.popularmovies.movies.presentation.presenter;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import br.com.ecarrara.popularmovies.core.presentation.Presenter;
-import br.com.ecarrara.popularmovies.movies.data.repository.MoviesRepository;
-import br.com.ecarrara.popularmovies.movies.data.repository.MoviesRepositoryImpl;
+import br.com.ecarrara.popularmovies.movies.domain.MoviesRepository;
+import br.com.ecarrara.popularmovies.movies.data.MoviesRepositoryImpl;
 import br.com.ecarrara.popularmovies.movies.domain.entity.Movie;
 import br.com.ecarrara.popularmovies.movies.presentation.model.MovieListItemViewModel;
 import br.com.ecarrara.popularmovies.movies.presentation.model.MovieListItemViewModelMapper;
@@ -14,7 +16,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class MoviesListPresenter implements Presenter<MovieListView> {
+public class MoviesListPresenter implements Presenter<MovieListView, Void> {
 
     private static final int ACTION_LIST_POPULAR = 0;
     private static final int ACTION_LIST_TOP_RATED = 1;
@@ -25,10 +27,7 @@ public class MoviesListPresenter implements Presenter<MovieListView> {
 
     private int currentAction;
 
-    public MoviesListPresenter() {
-        this(new MoviesRepositoryImpl());
-    }
-
+    @Inject
     public MoviesListPresenter(MoviesRepository moviesRepository) {
         this.moviesRepository = moviesRepository;
     }
@@ -48,6 +47,11 @@ public class MoviesListPresenter implements Presenter<MovieListView> {
     public void attachTo(MovieListView view) {
         this.movieListView = view;
         onListPopularMovies();
+    }
+
+    @Override
+    public void attachTo(MovieListView view, Void data) {
+        attachTo(view);
     }
 
     public void onRetry() {

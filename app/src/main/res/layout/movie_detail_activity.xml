@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_movie_detail"
     android:layout_width="match_parent"
@@ -81,16 +82,20 @@
                     android:paddingBottom="8dp"
                     tools:text="13th November of 2017"/>
 
-                <RatingBar
-                    android:id="@+id/movie_rating_bar"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/movie_rating_text_view"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:numStars="10"
-                    android:stepSize="0.1"
-                    android:clickable="false"
-                    tools:rating="5.8"
-                    style="@style/Widget.AppCompat.RatingBar.Small" />
+                    android:gravity="center_vertical"
+                    android:drawableStart="@drawable/ic_star"
+                    android:textStyle="bold"
+                    tools:text="5.8" />
 
+                <CheckBox
+                    android:id="@+id/movie_add_to_favorites_checkbox"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:button="@drawable/favorites_add_button_background_state_selector" />
 
             </LinearLayout>
 

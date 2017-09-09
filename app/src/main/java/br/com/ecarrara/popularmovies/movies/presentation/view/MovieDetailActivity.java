@@ -1,33 +1,38 @@
 package br.com.ecarrara.popularmovies.movies.presentation.view;
 
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
-import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
+import javax.inject.Inject;
+
 import br.com.ecarrara.popularmovies.R;
-import br.com.ecarrara.popularmovies.movies.presentation.presenter.MovieDetailPresenter;
+import br.com.ecarrara.popularmovies.core.di.Injector;
+import br.com.ecarrara.popularmovies.movies.domain.entity.Movie;
 import br.com.ecarrara.popularmovies.movies.presentation.model.MovieDetailViewModel;
+import br.com.ecarrara.popularmovies.movies.presentation.presenter.MovieDetailPresenter;
 import br.com.ecarrara.popularmovies.reviews.presentation.view.MovieReviewsFragment;
 import br.com.ecarrara.popularmovies.trailers.presentation.view.TrailerListFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
 public class MovieDetailActivity extends AppCompatActivity implements MovieDetailView {
 
-    private int movieId;
-    private MovieDetailPresenter movieDetailPresenter;
+    @Inject MovieDetailPresenter movieDetailPresenter;
 
     @BindView(R.id.progress_indicator) ProgressBar progressIndicator;
     @BindView(R.id.error_display) ViewGroup errorDisplay;
@@ -39,7 +44,10 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     @BindView(R.id.movie_title_text_view) TextView movieTitleTextView;
     @BindView(R.id.movie_release_date_text_view) TextView movieReleaseDateTextView;
     @BindView(R.id.movie_synopsis_text_view) TextView movieSynopsisTextView;
-    @BindView(R.id.movie_rating_bar) RatingBar movieRatingBar;
+    @BindView(R.id.movie_rating_text_view) TextView movieRatingTextView;
+    @BindView(R.id.movie_add_to_favorites_checkbox) CheckBox movieAddToFavoriteCheckBox;
+
+    private int movieId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,8 +57,8 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     }
 
     private void initialize() {
+        Injector.applicationComponent().inject(this);
         processBundle();
-        this.movieDetailPresenter = new MovieDetailPresenter(this.movieId);
         ButterKnife.bind(this);
         setUpActionBar();
         setUpMovieTrailersView();
@@ -60,7 +68,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     private void processBundle() {
         final Intent movieDetailIntent = getIntent();
         this.movieId = movieDetailIntent.getIntExtra(MovieDetailView.MOVIE_ID_KEY,
-                MovieDetailView.NO_MOVIE_ID);
+                Movie.INVALID_ID);
     }
 
     private void setUpActionBar() {
@@ -89,7 +97,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     @Override
     protected void onResume() {
         super.onResume();
-        this.movieDetailPresenter.attachTo(this);
+        this.movieDetailPresenter.attachTo(this, this.movieId);
     }
 
     @Override
@@ -103,13 +111,19 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
         showContent();
         movieTitleTextView.setText(movieDetailViewModel.title());
         movieReleaseDateTextView.setText(movieDetailViewModel.releaseDate());
-        movieRatingBar.setRating(movieDetailViewModel.voteAverage().floatValue());
+        movieRatingTextView.setText(getString(R.string.movie_detail_rating_format, movieDetailViewModel.voteAverage()));
         movieSynopsisTextView.setText(movieDetailViewModel.plotSynopsis());
+        movieAddToFavoriteCheckBox.setChecked(movieDetailViewModel.isFavorite());
 
         Picasso.with(MovieDetailActivity.this)
                 .load(movieDetailViewModel.posterPath())
                 .fit()
                 .into(moviePosterImageView);
+    }
+
+    @Override
+    public void setAddToFavoritesStateTo(boolean isOnFavorites) {
+        movieAddToFavoriteCheckBox.setChecked(isOnFavorites);
     }
 
     @Override
@@ -157,5 +171,10 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
         hideError();
         hideRetry();
         movieDetailContent.setVisibility(VISIBLE);
+    }
+
+    @OnClick(R.id.movie_add_to_favorites_checkbox)
+    public void isFavoriteChanged(View view) {
+        movieDetailPresenter.favoriteStateChanged(movieAddToFavoriteCheckBox.isChecked());
     }
 }

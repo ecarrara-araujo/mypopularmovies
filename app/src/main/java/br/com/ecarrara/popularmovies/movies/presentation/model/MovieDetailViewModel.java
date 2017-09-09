@@ -2,62 +2,47 @@ package br.com.ecarrara.popularmovies.movies.presentation.model;
 
 import com.google.auto.value.AutoValue;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import br.com.ecarrara.popularmovies.core.networking.rest.RestImageUrlBuilder;
-import br.com.ecarrara.popularmovies.movies.domain.entity.Movie;
-
-@AutoValue public abstract class MovieDetailViewModel {
+@AutoValue
+public abstract class MovieDetailViewModel {
 
     public abstract String title();
+
     public abstract String releaseDate();
+
     public abstract String posterPath();
+
     public abstract Double voteAverage();
+
     public abstract String plotSynopsis();
 
-    public static class Builder {
-        private String title = Movie.NO_TITLE;
-        private String releaseDate = Movie.INVALID_FORMATTED_DATE;
-        private String plotSynopsis = Movie.NO_OVERVIEW;
-        private Double voteAverage = Movie.NO_VOTE_AVERAGE;
-        private String posterPath = Movie.NO_POSTER_PATH;
+    public abstract boolean isFavorite();
 
-        public MovieDetailViewModel build() {
-            return new AutoValue_MovieDetailViewModel(
-                this.title,
-                this.releaseDate,
-                this.posterPath,
-                this.voteAverage,
-                this.plotSynopsis
-            );
-        }
+    public abstract Builder toBuilder();
 
-        public Builder(String title) {
-            this.title = title;
-        }
+    public static Builder builder() {
+        return new AutoValue_MovieDetailViewModel.Builder()
+                .setIsFavorite(false);
+    }
 
-        public Builder setDate(Date releaseDate) {
-            DateFormat dateFormat = SimpleDateFormat.getDateInstance();
-            this.releaseDate = dateFormat.format(releaseDate);
-            return this;
-        }
+    public MovieDetailViewModel withIsFavorite(boolean isFavorite) {
+        return toBuilder().setIsFavorite(isFavorite).build();
+    }
 
-        public Builder setPosterPath(String posterPath) {
-            this.posterPath = RestImageUrlBuilder.build(posterPath);
-            return this;
-        }
+    @AutoValue.Builder
+    abstract static class Builder {
+        abstract Builder setTitle(String title);
 
-        public Builder setVoteAverage(Double voteAverage) {
-            this.voteAverage = voteAverage;
-            return this;
-        }
+        abstract Builder setReleaseDate(String releaseDate);
 
-        public Builder setPlotSynopsis(String plotSynopsis) {
-            this.plotSynopsis = plotSynopsis;
-            return this;
-        }
+        abstract Builder setPosterPath(String posterPath);
+
+        abstract Builder setVoteAverage(Double voteAverage);
+
+        abstract Builder setPlotSynopsis(String plotSynopsis);
+
+        abstract Builder setIsFavorite(boolean isFavorite);
+
+        abstract MovieDetailViewModel build();
     }
 
 }

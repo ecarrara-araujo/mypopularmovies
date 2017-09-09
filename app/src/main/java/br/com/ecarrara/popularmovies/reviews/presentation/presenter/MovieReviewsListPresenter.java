@@ -2,9 +2,11 @@ package br.com.ecarrara.popularmovies.reviews.presentation.presenter;
 
 import java.util.List;
 
+import javax.inject.Inject;
+
 import br.com.ecarrara.popularmovies.core.presentation.Presenter;
-import br.com.ecarrara.popularmovies.reviews.data.repository.MovieReviewsRepository;
-import br.com.ecarrara.popularmovies.reviews.data.repository.MovieReviewsRepositoryImpl;
+import br.com.ecarrara.popularmovies.movies.domain.entity.Movie;
+import br.com.ecarrara.popularmovies.reviews.domain.MovieReviewsRepository;
 import br.com.ecarrara.popularmovies.reviews.presentation.model.MovieReviewListItemViewModel;
 import br.com.ecarrara.popularmovies.reviews.presentation.model.MovieReviewListItemViewModelMapper;
 import br.com.ecarrara.popularmovies.reviews.presentation.view.MovieReviewsListView;
@@ -12,7 +14,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class MovieReviewsListPresenter implements Presenter<MovieReviewsListView> {
+public class MovieReviewsListPresenter implements Presenter<MovieReviewsListView, Integer> {
 
     private MovieReviewsRepository movieReviewsRepository;
     private Disposable movieReviewsListDisposable;
@@ -20,13 +22,9 @@ public class MovieReviewsListPresenter implements Presenter<MovieReviewsListView
 
     private int movieId;
 
-    public MovieReviewsListPresenter(int movieId) {
-        this(movieId, new MovieReviewsRepositoryImpl());
-    }
-
-    public MovieReviewsListPresenter(int movieId, MovieReviewsRepository movieReviewsRepository) {
+    @Inject
+    public MovieReviewsListPresenter(MovieReviewsRepository movieReviewsRepository) {
         this.movieReviewsRepository = movieReviewsRepository;
-        this.movieId = movieId;
     }
 
     @Override
@@ -41,8 +39,14 @@ public class MovieReviewsListPresenter implements Presenter<MovieReviewsListView
     }
 
     @Override
-    public void attachTo(MovieReviewsListView movieReviewsListView) {
-        this.movieReviewsListView = movieReviewsListView;
+    public void attachTo(MovieReviewsListView view) {
+        attachTo(view, Movie.INVALID_ID);
+    }
+
+    @Override
+    public void attachTo(MovieReviewsListView view, Integer data) {
+        this.movieReviewsListView = view;
+        this.movieId = data;
         displayMovieReviews();
     }
 
@@ -57,8 +61,8 @@ public class MovieReviewsListPresenter implements Presenter<MovieReviewsListView
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
-                    this::displayMovieReviewsList,
-                    exception -> displayError(exception.getMessage())
+                        this::displayMovieReviewsList,
+                        exception -> displayError(exception.getMessage())
                 );
     }
 
