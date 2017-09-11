@@ -9,6 +9,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.io.IOException;
 import java.util.List;
 
+import br.com.ecarrara.popularmovies.core.networking.connectivity.ConnectivityObserver;
+import br.com.ecarrara.popularmovies.favorites.domain.data.FavoritesLocalDataSource;
 import br.com.ecarrara.popularmovies.movies.data.MoviesRepositoryImpl;
 import br.com.ecarrara.popularmovies.movies.data.datasource.MoviesDataSource;
 import br.com.ecarrara.popularmovies.movies.domain.MoviesRepository;
@@ -27,11 +29,17 @@ public class PopularMoviesRepositoryTest {
     @Mock
     private MoviesDataSource mockMoviesDataSource;
 
+    @Mock
+    private FavoritesLocalDataSource favoritesLocalDataSource;
+
+    @Mock
+    private ConnectivityObserver connectivityObserver;
+
     private MoviesRepository moviesRepository;
 
     @Before
     public void setUp() throws IOException {
-        moviesRepository = new MoviesRepositoryImpl(mockMoviesDataSource);
+        moviesRepository = new MoviesRepositoryImpl(mockMoviesDataSource, favoritesLocalDataSource, connectivityObserver);
     }
 
     @Test

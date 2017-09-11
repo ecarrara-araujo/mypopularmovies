@@ -13,7 +13,6 @@ import javax.inject.Inject;
 
 import br.com.ecarrara.popularmovies.favorites.data.datasource.contentprovider.FavoritesContract.FavoriteEntry;
 import br.com.ecarrara.popularmovies.favorites.domain.data.FavoritesLocalDataSource;
-import br.com.ecarrara.popularmovies.favorites.domain.entity.Favorite;
 import br.com.ecarrara.popularmovies.movies.domain.entity.Movie;
 import io.reactivex.Completable;
 import io.reactivex.Single;
@@ -92,6 +91,25 @@ public class FavoritesProviderLocalDataSource implements FavoritesLocalDataSourc
                 cursor.close();
             }
             return Single.just(isFavorite);
+        });
+    }
+
+    @Override
+    public Single<Movie> getFavoriteMovieDetail(int movieId) {
+        return Single.defer(() -> {
+            Cursor cursor = applicationContext.getContentResolver().query(FavoriteEntry.CONTENT_URI,
+                    null,
+                    FavoriteEntry.COLUMN_MOVIE_ID + " = ?",
+                    new String[]{String.valueOf(movieId)},
+                    null
+            );
+
+            if (cursor == null) {
+                return Single.error(new RuntimeException("Error fetching cached favorite Movie"));
+            }
+
+            Movie movie = FavoriteProviderMapper.mapMovieFromCursor(cursor);
+            return Single.just(movie);
         });
     }
 

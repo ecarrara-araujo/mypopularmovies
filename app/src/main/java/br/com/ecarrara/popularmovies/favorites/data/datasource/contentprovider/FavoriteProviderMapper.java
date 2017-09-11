@@ -13,9 +13,7 @@ import java.util.List;
 
 import br.com.ecarrara.popularmovies.core.data.datasource.contentprovider.ContentProviderContract;
 import br.com.ecarrara.popularmovies.core.utils.datetime.DateUtils;
-import br.com.ecarrara.popularmovies.favorites.data.datasource.contentprovider.FavoritesContract.FavoriteEntry;
 import br.com.ecarrara.popularmovies.favorites.data.datasource.contentprovider.FavoritesContract.FavoriteMovieEntry;
-import br.com.ecarrara.popularmovies.favorites.domain.entity.Favorite;
 import br.com.ecarrara.popularmovies.movies.domain.entity.Movie;
 
 public final class FavoriteProviderMapper {
@@ -30,7 +28,7 @@ public final class FavoriteProviderMapper {
         List<Movie> mappedFavoriteMovies = new ArrayList<>(cursor.getCount());
 
         while (!cursor.isAfterLast()) {
-            Movie mappedFavoriteMovie = mapMovieFromCursor(cursor);
+            Movie mappedFavoriteMovie = extractMovieFromCursor(cursor);
             mappedFavoriteMovies.add(mappedFavoriteMovie);
             cursor.moveToNext();
         }
@@ -38,7 +36,14 @@ public final class FavoriteProviderMapper {
         return mappedFavoriteMovies;
     }
 
-    private static Movie mapMovieFromCursor(@NonNull Cursor cursor) {
+    static Movie mapMovieFromCursor(@NonNull Cursor cursor) {
+        if (!cursor.moveToFirst()) {
+            throw new RuntimeException("Error mapping cached favorite Movie from cursor to object");
+        }
+        return extractMovieFromCursor(cursor);
+    }
+
+    private static Movie extractMovieFromCursor(@NonNull Cursor cursor) {
         int id = cursor.getInt(cursor.getColumnIndex(FavoriteMovieEntry.COLUMN_ID));
         String originalTitle = cursor.getString(cursor.getColumnIndex(FavoriteMovieEntry.COLUMN_ORIGINAL_TITLE));
         String overview = cursor.getString(cursor.getColumnIndex(FavoriteMovieEntry.COLUMN_OVERVIEW));
