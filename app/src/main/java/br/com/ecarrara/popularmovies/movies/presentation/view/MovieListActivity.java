@@ -2,11 +2,10 @@ package br.com.ecarrara.popularmovies.movies.presentation.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -17,8 +16,8 @@ import javax.inject.Inject;
 
 import br.com.ecarrara.popularmovies.R;
 import br.com.ecarrara.popularmovies.core.di.Injector;
-import br.com.ecarrara.popularmovies.movies.presentation.presenter.MoviesListPresenter;
 import br.com.ecarrara.popularmovies.movies.presentation.model.MovieListItemViewModel;
+import br.com.ecarrara.popularmovies.movies.presentation.presenter.MoviesListPresenter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -36,6 +35,7 @@ public class MovieListActivity extends AppCompatActivity
     @BindView(R.id.progress_indicator) ProgressBar progressIndicator;
     @BindView(R.id.text_view_error_message) TextView errorDisplay;
     @BindView(R.id.button_retry) ImageButton retryButton;
+    @BindView(R.id.bottom_navigation_menu_movies_filtering) BottomNavigationView moviesFilteringBottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +48,22 @@ public class MovieListActivity extends AppCompatActivity
     private void initialize() {
         Injector.applicationComponent().inject(this);
         setupRecyclerView();
+        setupBottomNavigation();
+    }
+
+    private void setupBottomNavigation() {
+        moviesFilteringBottomNavigationView.setSelectedItemId(R.id.menu_action_load_most_popular);
+        moviesFilteringBottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.menu_action_load_most_popular:
+                    this.moviesListPresenter.onListPopularMovies();
+                    break;
+                case R.id.menu_action_load_top_rated:
+                    this.moviesListPresenter.onListTopRatedMovies();
+                    break;
+            }
+            return true;
+        });
     }
 
     private void setupRecyclerView() {
@@ -61,12 +77,6 @@ public class MovieListActivity extends AppCompatActivity
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.movie_list_menu, menu);
-        return true;
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
         this.moviesListPresenter.attachTo(this);
@@ -76,24 +86,6 @@ public class MovieListActivity extends AppCompatActivity
     protected void onDestroy() {
         this.moviesListPresenter.destroy();
         super.onDestroy();
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        final int itemId = item.getItemId();
-
-        switch (itemId) {
-            case (R.id.menu_action_load_most_popular):
-                this.moviesListPresenter.onListPopularMovies();
-                break;
-            case(R.id.menu_action_load_top_rated):
-                this.moviesListPresenter.onListTopRatedMovies();
-                break;
-            default:
-                this.showError("How on Earth did you got here?");
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     @Override

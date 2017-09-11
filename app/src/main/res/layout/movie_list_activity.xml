@@ -1,30 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_movie_list"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingStart="@dimen/movie_list_view_padding_left"
-    android:paddingEnd="@dimen/movie_list_view_padding_right"
     tools:context="br.com.ecarrara.popularmovies.movies.presentation.view.MovieListActivity">
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottom_navigation_menu_movies_filtering"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:itemBackground="@color/white"
+        app:itemIconTint="@color/accent"
+        app:itemTextColor="@color/accent"
+        app:menu="@menu/movie_list_menu"/>
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view_movie_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottom_navigation_menu_movies_filtering"
+        android:paddingStart="@dimen/movie_list_view_padding_left"
+        android:paddingEnd="@dimen/movie_list_view_padding_right" />
 
     <ProgressBar
         android:id="@+id/progress_indicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_centerInParent="true"
         android:visibility="gone" />
 
     <TextView
         android:id="@+id/text_view_error_message"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_centerInParent="true"
         android:visibility="gone"
         tools:text="This is a sample error message" />
 
@@ -32,8 +44,8 @@
         android:id="@+id/button_retry"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
+        android:layout_centerInParent="true"
         android:contentDescription="@string/retry_button_description"
         android:visibility="gone" />
 
-</FrameLayout>
+</RelativeLayout>
