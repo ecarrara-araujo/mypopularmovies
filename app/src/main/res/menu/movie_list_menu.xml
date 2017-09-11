@@ -16,4 +16,11 @@
         android:icon="@drawable/ic_star_border"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/menu_action_load_favorites"
+        android:orderInCategory="3"
+        android:title="@string/favorites"
+        android:icon="@drawable/ic_heart_border"
+        app:showAsAction="ifRoom" />
+
 </menu>

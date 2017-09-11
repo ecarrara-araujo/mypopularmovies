@@ -61,6 +61,9 @@ public class MovieListActivity extends AppCompatActivity
                 case R.id.menu_action_load_top_rated:
                     this.moviesListPresenter.onListTopRatedMovies();
                     break;
+                case R.id.menu_action_load_favorites:
+                    this.moviesListPresenter.onListFavorites();
+                    break;
             }
             return true;
         });

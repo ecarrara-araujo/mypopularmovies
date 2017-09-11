@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import br.com.ecarrara.popularmovies.core.presentation.Presenter;
+import br.com.ecarrara.popularmovies.favorites.domain.data.FavoritesLocalDataSource;
 import br.com.ecarrara.popularmovies.movies.domain.MoviesRepository;
 import br.com.ecarrara.popularmovies.movies.data.MoviesRepositoryImpl;
 import br.com.ecarrara.popularmovies.movies.domain.entity.Movie;
@@ -20,16 +21,21 @@ public class MoviesListPresenter implements Presenter<MovieListView, Void> {
 
     private static final int ACTION_LIST_POPULAR = 0;
     private static final int ACTION_LIST_TOP_RATED = 1;
+    private static final int ACTION_LIST_FAVORITES = 2;
 
     private MoviesRepository moviesRepository;
+    private FavoritesLocalDataSource favoritesLocalDataSource;
     private MovieListView movieListView;
     private Disposable moviesListDisposable;
 
     private int currentAction;
 
     @Inject
-    public MoviesListPresenter(MoviesRepository moviesRepository) {
+    public MoviesListPresenter(
+            MoviesRepository moviesRepository,
+            FavoritesLocalDataSource favoritesLocalDataSource) {
         this.moviesRepository = moviesRepository;
+        this.favoritesLocalDataSource = favoritesLocalDataSource;
     }
 
     @Override
@@ -77,6 +83,11 @@ public class MoviesListPresenter implements Presenter<MovieListView, Void> {
         initialize(this.moviesRepository.listTopRatedMovies());
     }
 
+    public void onListFavorites() {
+        this.currentAction = ACTION_LIST_FAVORITES;
+        initialize(favoritesLocalDataSource.list());
+    }
+
     public void onMovieSelected(Integer movieId) {
         this.movieListView.navigateToMovieDetailScreen(movieId);
     }
@@ -106,4 +117,5 @@ public class MoviesListPresenter implements Presenter<MovieListView, Void> {
         this.movieListView.showError(message);
         this.movieListView.showRetry();
     }
+
 }
