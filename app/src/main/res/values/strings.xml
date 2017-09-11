@@ -12,6 +12,9 @@
     <string name="trailer_player_chooser_title">Play trailer on …</string>
     <string name="indication_of_the_movie_rating">Indication of the movie rating</string>
 
+    <string name="movie_detail">Movie Detail</string>
+
     <string name="movie_detail_rating_format" translatable="false">%1$.1f</string>
+
     <string name="favorites">Favorites</string>
 </resources>
