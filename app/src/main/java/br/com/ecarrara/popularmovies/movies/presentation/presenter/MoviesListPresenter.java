@@ -4,17 +4,17 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import br.com.ecarrara.popularmovies.core.networking.connectivity.ConnectivityObserver;
 import br.com.ecarrara.popularmovies.core.presentation.Presenter;
 import br.com.ecarrara.popularmovies.favorites.domain.data.FavoritesLocalDataSource;
 import br.com.ecarrara.popularmovies.movies.domain.MoviesRepository;
-import br.com.ecarrara.popularmovies.movies.data.MoviesRepositoryImpl;
 import br.com.ecarrara.popularmovies.movies.domain.entity.Movie;
 import br.com.ecarrara.popularmovies.movies.presentation.model.MovieListItemViewModel;
 import br.com.ecarrara.popularmovies.movies.presentation.model.MovieListItemViewModelMapper;
 import br.com.ecarrara.popularmovies.movies.presentation.view.MovieListView;
 import io.reactivex.Single;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
 public class MoviesListPresenter implements Presenter<MovieListView, Void> {
@@ -25,17 +25,21 @@ public class MoviesListPresenter implements Presenter<MovieListView, Void> {
 
     private MoviesRepository moviesRepository;
     private FavoritesLocalDataSource favoritesLocalDataSource;
+    private ConnectivityObserver connectivityObserver;
     private MovieListView movieListView;
-    private Disposable moviesListDisposable;
+    private CompositeDisposable disposables = new CompositeDisposable();
 
     private int currentAction;
+    private Boolean isConnected = false;
 
     @Inject
     public MoviesListPresenter(
             MoviesRepository moviesRepository,
-            FavoritesLocalDataSource favoritesLocalDataSource) {
+            FavoritesLocalDataSource favoritesLocalDataSource,
+            ConnectivityObserver connectivityObserver) {
         this.moviesRepository = moviesRepository;
         this.favoritesLocalDataSource = favoritesLocalDataSource;
+        this.connectivityObserver = connectivityObserver;
     }
 
     @Override
@@ -46,13 +50,39 @@ public class MoviesListPresenter implements Presenter<MovieListView, Void> {
 
     @Override
     public void destroy() {
-        moviesListDisposable.dispose();
+        disposables.dispose();
     }
 
     @Override
     public void attachTo(MovieListView view) {
         this.movieListView = view;
-        onListPopularMovies();
+        onAttachLoadMoviesList();
+    }
+
+    private void onAttachLoadMoviesList() {
+        initialize(
+                this.connectivityObserver.observeConnectivity()
+                        .firstOrError()
+                        .doOnSuccess(isConnected -> MoviesListPresenter.this.isConnected = isConnected)
+                        .flatMap(isConnected -> {
+                            if (isConnected) {
+                                this.currentAction = ACTION_LIST_POPULAR;
+                                return moviesRepository.listPopularMovies();
+                            } else {
+                                this.currentAction = ACTION_LIST_FAVORITES;
+                                return favoritesLocalDataSource.list();
+                            }
+                        })
+                        .doAfterSuccess(movies -> observeConnectivityChanges())
+        );
+    }
+
+    private void observeConnectivityChanges() {
+        disposables.add(this.connectivityObserver.observeConnectivity()
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext(isConnected -> MoviesListPresenter.this.isConnected = isConnected)
+                .subscribe(this::connectivityStateChanged)
+        );
     }
 
     @Override
@@ -67,6 +97,9 @@ public class MoviesListPresenter implements Presenter<MovieListView, Void> {
                 break;
             case ACTION_LIST_TOP_RATED:
                 onListTopRatedMovies();
+                break;
+            case ACTION_LIST_FAVORITES:
+                onListFavorites();
                 break;
             default:
                 displayError("You should never be here...");
@@ -97,18 +130,24 @@ public class MoviesListPresenter implements Presenter<MovieListView, Void> {
         this.movieListView.hideError();
         this.movieListView.showLoading();
 
-        moviesListDisposable = moviesList
+        disposables.add(moviesList
                 .flatMap(movies -> Single.just(MovieListItemViewModelMapper.transformFrom(movies)))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(
                         this::displayMovieList,
                         exception -> displayError(exception.getMessage())
-                );
+                )
+        );
     }
 
     private void displayMovieList(List<MovieListItemViewModel> movieListItemModelList) {
         this.movieListView.hideLoading();
+        if (isConnected) {
+            movieListView.setUpToConnectivityOnline();
+        } else {
+            movieListView.setUpToConnectivityOffline();
+        }
         this.movieListView.displayMoviesList(movieListItemModelList);
     }
 
@@ -118,4 +157,12 @@ public class MoviesListPresenter implements Presenter<MovieListView, Void> {
         this.movieListView.showRetry();
     }
 
+    private void connectivityStateChanged(Boolean isConnected) {
+        if (isConnected) {
+            this.movieListView.setUpToConnectivityOnline();
+        } else {
+            this.movieListView.setUpToConnectivityOffline();
+            this.onListFavorites();
+        }
+    }
 }

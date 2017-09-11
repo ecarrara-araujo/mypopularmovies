@@ -13,8 +13,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         app:itemBackground="@color/white"
-        app:itemIconTint="@color/accent"
-        app:itemTextColor="@color/accent"
+        app:itemIconTint="@drawable/movie_list_bottom_navigation_icon_state_selector"
+        app:itemTextColor="@drawable/movie_list_bottom_navigation_icon_state_selector"
         app:menu="@menu/movie_list_menu"/>
 
     <android.support.v7.widget.RecyclerView
