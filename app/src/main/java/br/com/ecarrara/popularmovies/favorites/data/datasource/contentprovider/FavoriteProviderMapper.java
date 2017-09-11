@@ -46,7 +46,7 @@ public final class FavoriteProviderMapper {
         Double voteAverage = cursor.getDouble(cursor.getColumnIndex(FavoriteMovieEntry.COLUMN_VOTE_AVERAGE));
         String posterPath = cursor.getString(cursor.getColumnIndex(FavoriteMovieEntry.COLUMN_POSTER_PATH));
         Date releaseDate = mapDateFromDatabaseString(cursor.getString(
-                cursor.getColumnIndex(FavoriteMovieEntry.COLUMN_ORIGINAL_TITLE)));
+                cursor.getColumnIndex(FavoriteMovieEntry.COLUMN_RELEASE_DATE)));
 
         return new Movie
                 .Builder(id, originalTitle)
