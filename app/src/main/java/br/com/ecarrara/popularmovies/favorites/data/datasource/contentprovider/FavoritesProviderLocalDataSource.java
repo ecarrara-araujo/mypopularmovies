@@ -68,6 +68,8 @@ public class FavoritesProviderLocalDataSource implements FavoritesLocalDataSourc
             }
 
             List<Movie> favoriteMovies = FavoriteProviderMapper.mapMoviesFromCursor(favoritesCursor);
+            favoritesCursor.close();
+
             return Single.just(favoriteMovies);
         });
     }
