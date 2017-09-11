@@ -2,6 +2,7 @@ package br.com.ecarrara.popularmovies.core.di;
 
 import javax.inject.Singleton;
 
+import br.com.ecarrara.popularmovies.core.networking.di.NetworkingModule;
 import br.com.ecarrara.popularmovies.favorites.di.FavoritesModule;
 import br.com.ecarrara.popularmovies.movies.di.MoviesModule;
 import br.com.ecarrara.popularmovies.movies.presentation.view.MovieDetailActivity;
@@ -15,6 +16,7 @@ import dagger.Component;
 @Singleton
 @Component(modules = {
         ApplicationModule.class,
+        NetworkingModule.class,
         MoviesModule.class,
         ReviewsModule.class,
         TrailersModule.class,

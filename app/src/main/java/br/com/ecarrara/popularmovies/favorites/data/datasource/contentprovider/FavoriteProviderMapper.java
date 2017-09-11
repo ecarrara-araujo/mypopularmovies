@@ -39,14 +39,14 @@ public final class FavoriteProviderMapper {
     }
 
     private static Movie mapMovieFromCursor(@NonNull Cursor cursor) {
-        int id = cursor.getInt(cursor.getColumnIndex(FavoriteMovieEntry.TABLE_NAME + "." + FavoriteMovieEntry.COLUMN_ID));
+        int id = cursor.getInt(cursor.getColumnIndex(FavoriteMovieEntry.COLUMN_ID));
         String originalTitle = cursor.getString(cursor.getColumnIndex(FavoriteMovieEntry.COLUMN_ORIGINAL_TITLE));
         String overview = cursor.getString(cursor.getColumnIndex(FavoriteMovieEntry.COLUMN_OVERVIEW));
         Double popularity = cursor.getDouble(cursor.getColumnIndex(FavoriteMovieEntry.COLUMN_POPULARITY));
         Double voteAverage = cursor.getDouble(cursor.getColumnIndex(FavoriteMovieEntry.COLUMN_VOTE_AVERAGE));
         String posterPath = cursor.getString(cursor.getColumnIndex(FavoriteMovieEntry.COLUMN_POSTER_PATH));
         Date releaseDate = mapDateFromDatabaseString(cursor.getString(
-                cursor.getColumnIndex(FavoriteMovieEntry.COLUMN_ORIGINAL_TITLE)));
+                cursor.getColumnIndex(FavoriteMovieEntry.COLUMN_RELEASE_DATE)));
 
         return new Movie
                 .Builder(id, originalTitle)

@@ -34,7 +34,6 @@ public class FavoritesProvider extends ContentProvider {
     }
 
     private static final String[] ALL_FAVORITES_PROJECTION = {
-            FavoriteEntry.TABLE_NAME + "." + FavoriteEntry.COLUMN_ID,
             FavoriteMovieEntry.TABLE_NAME + "." + FavoriteMovieEntry.COLUMN_ID,
             FavoriteMovieEntry.COLUMN_ORIGINAL_TITLE,
             FavoriteMovieEntry.COLUMN_OVERVIEW,
