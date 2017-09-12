@@ -15,6 +15,7 @@ public class MovieDetailViewModelMapper {
                 .setTitle(movie.originalTitle())
                 .setReleaseDate(SimpleDateFormat.getDateInstance().format(movie.releaseDate()))
                 .setPosterPath(RestImageUrlBuilder.buildPosterUrl(movie.posterPath()))
+                .setBackdropPath(RestImageUrlBuilder.buildBackdropUrl(movie.backdropPath()))
                 .setVoteAverage(movie.voteAverage())
                 .setPlotSynopsis(movie.overview())
                 .setIsFavorite(isFavorite)

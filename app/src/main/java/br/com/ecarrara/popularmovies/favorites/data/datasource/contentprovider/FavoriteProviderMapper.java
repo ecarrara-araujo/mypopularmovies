@@ -50,6 +50,7 @@ public final class FavoriteProviderMapper {
         Double popularity = cursor.getDouble(cursor.getColumnIndex(FavoriteMovieEntry.COLUMN_POPULARITY));
         Double voteAverage = cursor.getDouble(cursor.getColumnIndex(FavoriteMovieEntry.COLUMN_VOTE_AVERAGE));
         String posterPath = cursor.getString(cursor.getColumnIndex(FavoriteMovieEntry.COLUMN_POSTER_PATH));
+        String backdropPath = cursor.getString(cursor.getColumnIndex(FavoriteMovieEntry.COLUMN_BACKDROP_PATH));
         Date releaseDate = mapDateFromDatabaseString(cursor.getString(
                 cursor.getColumnIndex(FavoriteMovieEntry.COLUMN_RELEASE_DATE)));
 
@@ -59,6 +60,7 @@ public final class FavoriteProviderMapper {
                 .setOverview(overview)
                 .setPopularity(popularity)
                 .setPosterPath(posterPath)
+                .setBackdropPath(backdropPath)
                 .setReleaseDate(releaseDate)
                 .setVoteAverage(voteAverage)
                 .build();
@@ -91,6 +93,7 @@ public final class FavoriteProviderMapper {
         contentValues.put(FavoriteMovieEntry.COLUMN_POPULARITY, movie.popularity());
         contentValues.put(FavoriteMovieEntry.COLUMN_VOTE_AVERAGE, movie.voteAverage());
         contentValues.put(FavoriteMovieEntry.COLUMN_POSTER_PATH, movie.posterPath());
+        contentValues.put(FavoriteMovieEntry.COLUMN_BACKDROP_PATH, movie.backdropPath());
 
         return contentValues;
     }

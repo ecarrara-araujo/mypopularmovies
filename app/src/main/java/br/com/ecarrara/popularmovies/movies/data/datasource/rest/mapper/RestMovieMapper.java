@@ -17,6 +17,7 @@ public class RestMovieMapper {
                 .setOverview(restMovieResult.overview())
                 .setPopularity(restMovieResult.popularity())
                 .setPosterPath(restMovieResult.posterPath())
+                .setBackdropPath(restMovieResult.backdropPath())
                 .setReleaseDate(RestDateMapper.transformFrom(restMovieResult.releaseDate()))
                 .setVoteAverage(restMovieResult.voteAverage())
                 .build();
@@ -29,6 +30,7 @@ public class RestMovieMapper {
                 .setOverview(movieDetailResponse.overview())
                 .setPopularity(movieDetailResponse.popularity())
                 .setPosterPath(movieDetailResponse.posterPath())
+                .setBackdropPath(movieDetailResponse.backdropPath())
                 .setReleaseDate(RestDateMapper.transformFrom(movieDetailResponse.releaseDate()))
                 .setVoteAverage(movieDetailResponse.voteAverage())
                 .build();

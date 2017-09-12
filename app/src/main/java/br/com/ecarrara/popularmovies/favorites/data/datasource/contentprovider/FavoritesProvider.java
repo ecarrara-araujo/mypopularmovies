@@ -40,7 +40,8 @@ public class FavoritesProvider extends ContentProvider {
             FavoriteMovieEntry.COLUMN_RELEASE_DATE,
             FavoriteMovieEntry.COLUMN_POPULARITY,
             FavoriteMovieEntry.COLUMN_VOTE_AVERAGE,
-            FavoriteMovieEntry.COLUMN_POSTER_PATH
+            FavoriteMovieEntry.COLUMN_POSTER_PATH,
+            FavoriteMovieEntry.COLUMN_BACKDROP_PATH
     };
 
     private static final SQLiteQueryBuilder allFavoriteInformationQueryBuilder;
@@ -175,6 +176,9 @@ public class FavoritesProvider extends ContentProvider {
 
         contentValues.put(FavoriteMovieEntry.COLUMN_POSTER_PATH,
                 values.getAsString(FavoriteMovieEntry.COLUMN_POSTER_PATH));
+
+        contentValues.put(FavoriteMovieEntry.COLUMN_BACKDROP_PATH,
+                values.getAsString(FavoriteMovieEntry.COLUMN_BACKDROP_PATH));
 
         contentValues.put(FavoriteMovieEntry.COLUMN_RELEASE_DATE,
                 values.getAsString(FavoriteMovieEntry.COLUMN_RELEASE_DATE));
