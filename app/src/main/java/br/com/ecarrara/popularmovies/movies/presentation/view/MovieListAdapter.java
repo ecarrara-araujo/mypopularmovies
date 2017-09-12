@@ -6,7 +6,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -15,6 +17,8 @@ import br.com.ecarrara.popularmovies.R;
 import br.com.ecarrara.popularmovies.movies.presentation.model.MovieListItemViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.view.View.GONE;
 
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.ViewHolder> {
 
@@ -44,8 +48,19 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
         String moviePath = movieListItemViewModels.get(position).posterPath();
         Picasso.with(parentContext)
                 .load(moviePath)
+                .noPlaceholder()
                 .fit()
-                .into(holder.moviePoster);
+                .into(holder.moviePoster, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        holder.moviePosterLoadingView.setVisibility(GONE);
+                    }
+
+                    @Override
+                    public void onError() {
+                        holder.moviePosterLoadingView.setVisibility(GONE);
+                    }
+                });
     }
 
     @Override
@@ -61,6 +76,7 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.image_view_movie_poster) ImageView moviePoster;
+        @BindView(R.id.progress_bar_image_loading) ProgressBar moviePosterLoadingView;
 
         public ViewHolder(View itemView) {
             super(itemView);
