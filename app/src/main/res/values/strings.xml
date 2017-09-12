@@ -17,4 +17,5 @@
     <string name="movie_detail_rating_format" translatable="false">%1$.1f</string>
 
     <string name="favorites">Favorites</string>
+    <string name="movie_list_poster_loading_error_message">Error Loading Movie Poster</string>
 </resources>
