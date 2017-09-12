@@ -53,8 +53,9 @@ public final class FavoriteProviderMapper {
         Date releaseDate = mapDateFromDatabaseString(cursor.getString(
                 cursor.getColumnIndex(FavoriteMovieEntry.COLUMN_RELEASE_DATE)));
 
-        return new Movie
-                .Builder(id, originalTitle)
+        return Movie.builder()
+                .setId(id)
+                .setOriginalTitle(originalTitle)
                 .setOverview(overview)
                 .setPopularity(popularity)
                 .setPosterPath(posterPath)
