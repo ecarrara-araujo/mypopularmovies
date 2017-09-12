@@ -19,7 +19,7 @@ public class ConnectivityObserverImpl implements ConnectivityObserver {
     @Override
     public Observable<Boolean> observeConnectivity() {
         return ReactiveNetwork.observeNetworkConnectivity(applicationContext)
-                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
                 .flatMap(connectivity ->
                         Observable.just(connectivity.getState().equals(NetworkInfo.State.CONNECTED))
                 );
