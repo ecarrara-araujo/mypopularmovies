@@ -8,7 +8,8 @@
     <dimen name="movie_list_view_padding_right">@dimen/movie_list_view_padding_left</dimen>
 
     <!-- Movie List Item -->
-    <dimen name="movie_list_item_poster_height">275dp</dimen>
+    <dimen name="movie_list_item_width_ratio">100dp</dimen>
+    <dimen name="movie_list_item_poster_height">160dp</dimen>
     <dimen name="movie_list_item_padding_left">8dp</dimen>
     <dimen name="movie_list_item_padding_right">@dimen/movie_list_item_padding_left</dimen>
     <dimen name="movie_list_item_padding_top">16dp</dimen>

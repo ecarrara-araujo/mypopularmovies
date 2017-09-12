@@ -56,6 +56,7 @@ dependencies {
     compile "com.android.support:recyclerview-v7:${ANDROID_SUPPORT_LIBS_VERSION}"
     compile "com.android.support:cardview-v7:${ANDROID_SUPPORT_LIBS_VERSION}"
     compile "com.android.support:design:${ANDROID_SUPPORT_LIBS_VERSION}"
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
     // Networking Libs
     compile 'com.google.code.gson:gson:2.8.0'

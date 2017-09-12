@@ -7,6 +7,7 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.MenuItem;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
@@ -55,13 +56,18 @@ public class MovieListActivity extends AppCompatActivity
     }
 
     private void setupRecyclerView() {
-        final int NUMBER_OF_COLUMNS_IN_GRID = 2;
+        final int NUMBER_OF_COLUMNS_IN_GRID = computeNumberOfColumns();
 
         GridLayoutManager layoutManager = new GridLayoutManager(this, NUMBER_OF_COLUMNS_IN_GRID);
         movieListAdapter = new MovieListAdapter(MovieListActivity.this, MovieListActivity.this);
         movieListView.setAdapter(movieListAdapter);
         movieListView.setLayoutManager(layoutManager);
         movieListView.setHasFixedSize(true);
+    }
+
+    private int computeNumberOfColumns() {
+        DisplayMetrics displayMetrics = this.getResources().getDisplayMetrics();
+        return (int) (displayMetrics.widthPixels / getResources().getDimension(R.dimen.movie_list_item_width_ratio));
     }
 
     @Override
