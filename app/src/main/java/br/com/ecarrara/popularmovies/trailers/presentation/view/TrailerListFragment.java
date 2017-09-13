@@ -2,6 +2,7 @@ package br.com.ecarrara.popularmovies.trailers.presentation.view;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -20,6 +21,7 @@ import br.com.ecarrara.popularmovies.core.di.Injector;
 import br.com.ecarrara.popularmovies.trailers.player.TrailerPlayer;
 import br.com.ecarrara.popularmovies.trailers.presentation.model.TrailerListItemViewModel;
 import br.com.ecarrara.popularmovies.trailers.presentation.presenter.TrailerListPresenter;
+import br.com.ecarrara.popularmovies.trailers.sharing.TrailerSharing;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -27,7 +29,9 @@ import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
 
 public class TrailerListFragment extends Fragment
-        implements TrailersListView, TrailersListAdapter.TrailerSelectedListener {
+        implements TrailersListView,
+        TrailersListAdapter.TrailerSelectedListener,
+        TrailersListAdapter.TrailerSharedListener {
 
     @Inject TrailerListPresenter trailerListPresenter;
 
@@ -90,9 +94,12 @@ public class TrailerListFragment extends Fragment
     private void setupRecyclerView() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(),
                 LinearLayoutManager.VERTICAL, false);
-        trailersListAdapter = new TrailersListAdapter(getContext(), this);
+        DividerItemDecoration dividerItemDecoration = new DividerItemDecoration(
+                getContext(), layoutManager.getOrientation());
+        trailersListAdapter = new TrailersListAdapter(getContext(), this, this);
         trailerListView.setAdapter(trailersListAdapter);
         trailerListView.setLayoutManager(layoutManager);
+        trailerListView.addItemDecoration(dividerItemDecoration);
         trailerListView.setHasFixedSize(true);
     }
 
@@ -172,7 +179,22 @@ public class TrailerListFragment extends Fragment
     }
 
     @Override
+    public void shareTrailer(String site, String key) {
+        try {
+            TrailerSharing.shareTrailer(getContext(), site, key);
+        } catch (Exception exception) {
+            hideContent();
+            showError(exception.getMessage());
+        }
+    }
+
+    @Override
     public void onTrailerSelected(String site, String key) {
         this.trailerListPresenter.trailerSelected(site, key);
+    }
+
+    @Override
+    public void onTrailerShared(String site, String key) {
+        this.trailerListPresenter.trailerShared(site, key);
     }
 }

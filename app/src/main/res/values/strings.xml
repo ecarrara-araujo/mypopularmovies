@@ -23,4 +23,7 @@
 
     <string name="favorites">Favorites</string>
     <string name="movie_list_poster_loading_error_message">Error Loading Movie Poster</string>
+
+    <string name="trailer_sharing_chooser_title">Share trailer on …</string>
+    <string name="trailer_sharing_message">Check out this awesome trailer</string>
 </resources>

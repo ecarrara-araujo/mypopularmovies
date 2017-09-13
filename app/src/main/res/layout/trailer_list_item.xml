@@ -1,28 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="horizontal"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/trailer_list_item_padding_top"
+    android:orientation="horizontal"
     android:paddingBottom="@dimen/trailer_list_item_padding_bottom"
+    android:paddingEnd="@dimen/trailer_list_item_padding_right"
     android:paddingStart="@dimen/trailer_list_item_padding_left"
-    android:paddingEnd="@dimen/trailer_list_item_padding_right">
-
-    <ImageView
-        tools:srcCompat="@drawable/art_play_circle_outline_48dp"
-        android:contentDescription="@string/play_trailer_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"/>
+    android:paddingTop="@dimen/trailer_list_item_padding_top">
 
     <TextView
-        android:id="@+id/text_view_trailer_name"
-        android:layout_width="match_parent"
+        android:id="@+id/trailers_trailer_name_text_view"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:paddingStart="@dimen/trailer_list_item_title_text_padding_left"
+        android:layout_weight="1"
         android:paddingEnd="@dimen/trailer_list_item_title_text_padding_right"
+        android:paddingStart="@dimen/trailer_list_item_title_text_padding_left"
+        android:textSize="16sp"
+        android:textStyle="bold"
         tools:text="Awesome Trailer" />
+
+    <ImageButton
+        android:id="@+id/trailers_share_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/ic_share"
+        android:contentDescription="@string/play_trailer_button" />
+
+    <ImageButton
+        android:id="@+id/trailers_play_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/ic_play_circle_outline"
+        android:contentDescription="@string/play_trailer_button" />
 
 </LinearLayout>
