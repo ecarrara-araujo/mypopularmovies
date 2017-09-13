@@ -43,6 +43,10 @@ public class TrailerListFragment extends Fragment
     private static final String ARGUMENT_MOVIE_ID = "movie_id";
     private static final int INVALID_MOVIE_ID = -1;
 
+    private static final String LAST_KNOWN_TRAILER_LIST_POSITION_KEY = "last_known_trailer_list_position";
+    private static final int DEFAULT_TRAILER_LIST_INITIAL_POSITION = 0;
+    private int lastKnownTrailerListPosition = DEFAULT_TRAILER_LIST_INITIAL_POSITION;
+
     private TrailersListAdapter trailersListAdapter;
 
     private int movieId = INVALID_MOVIE_ID;
@@ -67,8 +71,16 @@ public class TrailerListFragment extends Fragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        processSavedInstanceState(savedInstanceState);
         if (getArguments() != null) {
             movieId = getArguments().getInt(ARGUMENT_MOVIE_ID);
+        }
+    }
+
+    private void processSavedInstanceState(Bundle savedInstanceState) {
+        if(savedInstanceState != null) {
+            lastKnownTrailerListPosition = savedInstanceState.getInt(
+                    LAST_KNOWN_TRAILER_LIST_POSITION_KEY, DEFAULT_TRAILER_LIST_INITIAL_POSITION);
         }
     }
 
@@ -107,6 +119,13 @@ public class TrailerListFragment extends Fragment
     public void onResume() {
         super.onResume();
         this.trailerListPresenter.attachTo(this, this.movieId);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt(LAST_KNOWN_TRAILER_LIST_POSITION_KEY,
+                ((LinearLayoutManager)trailerListView.getLayoutManager()).findFirstVisibleItemPosition());
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -166,6 +185,13 @@ public class TrailerListFragment extends Fragment
     public void displayTrailersList(List<TrailerListItemViewModel> trailerListItemViewModelList) {
         this.showContent();
         this.trailersListAdapter.setTrailerListItemViewModelList(trailerListItemViewModelList);
+        restoreTrailerListPosition();
+    }
+
+    private void restoreTrailerListPosition() {
+        if(trailersListAdapter.getItemCount() < lastKnownTrailerListPosition) {
+            trailerListView.scrollToPosition(lastKnownTrailerListPosition);
+        }
     }
 
     @Override
