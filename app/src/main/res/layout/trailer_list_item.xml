@@ -27,7 +27,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="@dimen/trailer_list_item_title_text_padding_right"
         android:background="@drawable/ic_share"
         android:contentDescription="@string/play_trailer_button" />
 
@@ -36,7 +36,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="@dimen/trailer_list_item_title_text_padding_right"
         android:background="@drawable/ic_play_circle_outline"
         android:contentDescription="@string/play_trailer_button" />
 
