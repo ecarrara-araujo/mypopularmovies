@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 import java.util.List;
@@ -14,21 +15,29 @@ import br.com.ecarrara.popularmovies.R;
 import br.com.ecarrara.popularmovies.trailers.presentation.model.TrailerListItemViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class TrailersListAdapter extends RecyclerView.Adapter<TrailersListAdapter.ViewHolder> {
 
     private List<TrailerListItemViewModel> trailerListItemViewModelList;
     private Context parentContext;
     private TrailerSelectedListener trailerSelectedListener;
+    private TrailerSharedListener trailerSharedListener;
 
     interface TrailerSelectedListener {
         void onTrailerSelected(String site, String key);
     }
 
+    interface TrailerSharedListener {
+        void onTrailerShared(String site, String key);
+    }
+
     public TrailersListAdapter(Context parentContext,
-                               TrailerSelectedListener trailerSelectedListener) {
+                               TrailerSelectedListener trailerSelectedListener,
+                               TrailerSharedListener trailerSharedListener) {
         this.parentContext = parentContext;
         this.trailerSelectedListener = trailerSelectedListener;
+        this.trailerSharedListener = trailerSharedListener;
     }
 
     @Override
@@ -56,22 +65,33 @@ public class TrailersListAdapter extends RecyclerView.Adapter<TrailersListAdapte
         notifyDataSetChanged();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    class ViewHolder extends RecyclerView.ViewHolder {
 
-        @BindView(R.id.text_view_trailer_name) TextView trailerName;
+        @BindView(R.id.trailers_trailer_name_text_view) TextView trailerName;
+        @BindView(R.id.trailers_play_button) ImageButton playButton;
+        @BindView(R.id.trailers_share_button) ImageButton shareButton;
 
         ViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
-            itemView.setOnClickListener(this);
         }
 
-        @Override
-        public void onClick(View v) {
+        @OnClick(R.id.trailers_play_button)
+        public void playTrailer(View v) {
             final TrailerListItemViewModel clickedItem = trailerListItemViewModelList.get(
                     getAdapterPosition()
             );
             TrailersListAdapter.this.trailerSelectedListener.onTrailerSelected(
+                    clickedItem.site(), clickedItem.key()
+            );
+        }
+
+        @OnClick(R.id.trailers_share_button)
+        public void shareTrailer(View v) {
+            final TrailerListItemViewModel clickedItem = trailerListItemViewModelList.get(
+                    getAdapterPosition()
+            );
+            TrailersListAdapter.this.trailerSharedListener.onTrailerShared(
                     clickedItem.site(), clickedItem.key()
             );
         }

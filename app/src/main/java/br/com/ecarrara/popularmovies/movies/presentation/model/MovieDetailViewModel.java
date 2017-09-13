@@ -11,6 +11,8 @@ public abstract class MovieDetailViewModel {
 
     public abstract String posterPath();
 
+    public abstract String backdropPath();
+
     public abstract Double voteAverage();
 
     public abstract String plotSynopsis();
@@ -30,11 +32,14 @@ public abstract class MovieDetailViewModel {
 
     @AutoValue.Builder
     abstract static class Builder {
+
         abstract Builder setTitle(String title);
 
         abstract Builder setReleaseDate(String releaseDate);
 
         abstract Builder setPosterPath(String posterPath);
+
+        abstract Builder setBackdropPath(String backdropPath);
 
         abstract Builder setVoteAverage(Double voteAverage);
 
@@ -43,6 +48,7 @@ public abstract class MovieDetailViewModel {
         abstract Builder setIsFavorite(boolean isFavorite);
 
         abstract MovieDetailViewModel build();
+
     }
 
 }

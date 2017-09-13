@@ -7,9 +7,10 @@ import com.google.auto.value.AutoValue;
 
     public abstract Integer movieId();
     public abstract String posterPath();
+    public abstract String title();
 
-    public static MovieListItemViewModel create(int movieId, String posterPath) {
-        return new AutoValue_MovieListItemViewModel(movieId, posterPath);
+    public static MovieListItemViewModel create(int movieId, String posterPath, String title) {
+        return new AutoValue_MovieListItemViewModel(movieId, posterPath, title);
     }
 
 }

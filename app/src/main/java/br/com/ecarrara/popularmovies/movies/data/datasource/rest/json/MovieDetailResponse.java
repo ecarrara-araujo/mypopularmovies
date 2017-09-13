@@ -14,6 +14,7 @@ import com.google.gson.annotations.SerializedName;
     @SerializedName("vote_average") public abstract Double voteAverage();
     @SerializedName("popularity") public abstract Double popularity();
     @SerializedName("poster_path") public abstract String posterPath();
+    @SerializedName("backdrop_path") public abstract String backdropPath();
 
     public static TypeAdapter<MovieDetailResponse> typeAdapter(Gson gson) {
         return new AutoValue_MovieDetailResponse.GsonTypeAdapter(gson);

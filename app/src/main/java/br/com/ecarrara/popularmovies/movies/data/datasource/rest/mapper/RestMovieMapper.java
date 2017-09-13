@@ -11,22 +11,26 @@ import br.com.ecarrara.popularmovies.movies.domain.entity.Movie;
 public class RestMovieMapper {
 
     public static Movie transformFrom(Result restMovieResult) {
-        return new Movie
-                .Builder(restMovieResult.id(), restMovieResult.originalTitle())
+        return Movie.builder()
+                .setId(restMovieResult.id())
+                .setOriginalTitle(restMovieResult.originalTitle())
                 .setOverview(restMovieResult.overview())
                 .setPopularity(restMovieResult.popularity())
                 .setPosterPath(restMovieResult.posterPath())
+                .setBackdropPath(restMovieResult.backdropPath())
                 .setReleaseDate(RestDateMapper.transformFrom(restMovieResult.releaseDate()))
                 .setVoteAverage(restMovieResult.voteAverage())
                 .build();
     }
 
     public static Movie transformFrom(MovieDetailResponse movieDetailResponse) {
-        return new Movie
-                .Builder(movieDetailResponse.id(), movieDetailResponse.originalTitle())
+        return Movie.builder()
+                .setId(movieDetailResponse.id())
+                .setOriginalTitle(movieDetailResponse.originalTitle())
                 .setOverview(movieDetailResponse.overview())
                 .setPopularity(movieDetailResponse.popularity())
                 .setPosterPath(movieDetailResponse.posterPath())
+                .setBackdropPath(movieDetailResponse.backdropPath())
                 .setReleaseDate(RestDateMapper.transformFrom(movieDetailResponse.releaseDate()))
                 .setVoteAverage(movieDetailResponse.voteAverage())
                 .build();

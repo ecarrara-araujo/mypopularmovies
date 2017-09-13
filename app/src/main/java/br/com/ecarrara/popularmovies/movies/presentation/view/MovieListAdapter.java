@@ -6,7 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -15,6 +18,9 @@ import br.com.ecarrara.popularmovies.R;
 import br.com.ecarrara.popularmovies.movies.presentation.model.MovieListItemViewModel;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+
+import static android.view.View.GONE;
+import static android.view.View.VISIBLE;
 
 public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.ViewHolder> {
 
@@ -42,10 +48,37 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         String moviePath = movieListItemViewModels.get(position).posterPath();
+        final String movieTitle = movieListItemViewModels.get(position).title();
+        hideErrorForHolder(holder);
         Picasso.with(parentContext)
                 .load(moviePath)
                 .fit()
-                .into(holder.moviePoster);
+                .into(holder.moviePoster, new Callback() {
+                    @Override
+                    public void onSuccess() {
+                        holder.moviePosterLoadingView.setVisibility(GONE);
+                    }
+
+                    @Override
+                    public void onError() {
+                        displayErrorForHolder(holder, movieTitle);
+                    }
+                });
+    }
+
+    private void hideErrorForHolder(ViewHolder holder) {
+        holder.erroIconImageView.setVisibility(GONE);
+        holder.errorMessageTextView.setVisibility(GONE);
+    }
+
+    private void displayErrorForHolder(ViewHolder holder, String message) {
+        holder.moviePosterLoadingView.setVisibility(GONE);
+        holder.erroIconImageView.setVisibility(VISIBLE);
+        holder.errorMessageTextView.setVisibility(VISIBLE);
+
+        if (!message.isEmpty()) {
+            holder.errorMessageTextView.setText(message);
+        }
     }
 
     @Override
@@ -61,6 +94,9 @@ public class MovieListAdapter extends RecyclerView.Adapter<MovieListAdapter.View
     class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         @BindView(R.id.image_view_movie_poster) ImageView moviePoster;
+        @BindView(R.id.progress_bar_image_loading) ProgressBar moviePosterLoadingView;
+        @BindView(R.id.image_view_error_icon) ImageView erroIconImageView;
+        @BindView(R.id.text_view_error_message) TextView errorMessageTextView;
 
         public ViewHolder(View itemView) {
             super(itemView);

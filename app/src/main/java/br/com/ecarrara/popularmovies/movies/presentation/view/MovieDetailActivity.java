@@ -2,12 +2,14 @@ package br.com.ecarrara.popularmovies.movies.presentation.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -21,8 +23,6 @@ import br.com.ecarrara.popularmovies.core.di.Injector;
 import br.com.ecarrara.popularmovies.movies.domain.entity.Movie;
 import br.com.ecarrara.popularmovies.movies.presentation.model.MovieDetailViewModel;
 import br.com.ecarrara.popularmovies.movies.presentation.presenter.MovieDetailPresenter;
-import br.com.ecarrara.popularmovies.reviews.presentation.view.MovieReviewsFragment;
-import br.com.ecarrara.popularmovies.trailers.presentation.view.TrailerListFragment;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
@@ -35,19 +35,21 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     @Inject MovieDetailPresenter movieDetailPresenter;
 
     @BindView(R.id.progress_indicator) ProgressBar progressIndicator;
-    @BindView(R.id.error_display) ViewGroup errorDisplay;
-    @BindView(R.id.text_view_error_message) TextView errorTextDisplay;
-    @BindView(R.id.button_retry) ImageButton retryButton;
 
-    @BindView(R.id.movie_detail_content) ViewGroup movieDetailContent;
-    @BindView(R.id.movie_poster_image_view) ImageView moviePosterImageView;
-    @BindView(R.id.movie_title_text_view) TextView movieTitleTextView;
-    @BindView(R.id.movie_release_date_text_view) TextView movieReleaseDateTextView;
-    @BindView(R.id.movie_synopsis_text_view) TextView movieSynopsisTextView;
-    @BindView(R.id.movie_rating_text_view) TextView movieRatingTextView;
-    @BindView(R.id.movie_add_to_favorites_checkbox) CheckBox movieAddToFavoriteCheckBox;
+    @BindView(R.id.error_message_text_view) TextView errorTextDisplay;
+    @BindView(R.id.retry_button) Button retryButton;
+
+    @Nullable @BindView(R.id.movie_detail_backdrop_image_view) ImageView movieBackdropImageView;
+    @BindView(R.id.movie_detail_poster_image_view) ImageView moviePosterImageView;
+    @BindView(R.id.movie_detail_original_title_text_view) TextView movieTitleTextView;
+    @BindView(R.id.movie_detail_release_date_text_view) TextView movieReleaseDateTextView;
+    @BindView(R.id.movie_detail_rating_text_view) TextView movieRatingTextView;
+    @BindView(R.id.movie_detail_add_to_favorites_checkbox) CheckBox movieAddToFavoriteCheckBox;
+    @BindView(R.id.movie_details_more_info_view_pager) ViewPager movieAdditionalInfoViewPager;
+    @BindView(R.id.movie_details_more_info_tabs) TabLayout movieAdditionalInfoTabs;
 
     private int movieId;
+    private MovieMoreInfoViewPagerAdapter movieMoreInfoViewPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,14 +60,13 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
 
     private void initialize() {
         Injector.applicationComponent().inject(this);
-        processBundle();
+        processIntentParameters();
         ButterKnife.bind(this);
         setUpActionBar();
-        setUpMovieTrailersView();
-        setUpMovieReviewsView();
+        setUpMovieInfoViewPager();
     }
 
-    private void processBundle() {
+    private void processIntentParameters() {
         final Intent movieDetailIntent = getIntent();
         this.movieId = movieDetailIntent.getIntExtra(MovieDetailView.MOVIE_ID_KEY,
                 Movie.INVALID_ID);
@@ -79,20 +80,11 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
         }
     }
 
-    private void setUpMovieTrailersView() {
-        TrailerListFragment trailerListFragment = TrailerListFragment.newInstance(this.movieId);
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.movie_trailer_container, trailerListFragment)
-                .commit();
-    }
-
-    private void setUpMovieReviewsView() {
-        MovieReviewsFragment movieReviewsFragment = MovieReviewsFragment.newInstance(this.movieId);
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.movie_reviews_container, movieReviewsFragment)
-                .commit();
+    private void setUpMovieInfoViewPager() {
+        movieMoreInfoViewPagerAdapter = new MovieMoreInfoViewPagerAdapter(
+                getSupportFragmentManager(), getApplicationContext());
+        this.movieAdditionalInfoViewPager.setAdapter(movieMoreInfoViewPagerAdapter);
+        this.movieAdditionalInfoTabs.setupWithViewPager(this.movieAdditionalInfoViewPager);
     }
 
     @Override
@@ -100,7 +92,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
         super.onResume();
         this.movieDetailPresenter.attachTo(this, this.movieId);
     }
-
+    
     @Override
     protected void onDestroy() {
         this.movieDetailPresenter.destroy();
@@ -109,18 +101,26 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
 
     @Override
     public void displayMovieDetail(MovieDetailViewModel movieDetailViewModel) {
+        movieMoreInfoViewPagerAdapter.setMovieData(movieId, movieDetailViewModel.plotSynopsis());
         showContent();
         movieTitleTextView.setText(movieDetailViewModel.title());
         movieReleaseDateTextView.setText(movieDetailViewModel.releaseDate());
         movieRatingTextView.setText(getString(R.string.movie_detail_rating_format, movieDetailViewModel.voteAverage()));
-        movieSynopsisTextView.setText(movieDetailViewModel.plotSynopsis());
         movieAddToFavoriteCheckBox.setChecked(movieDetailViewModel.isFavorite());
 
         Picasso.with(MovieDetailActivity.this)
                 .load(movieDetailViewModel.posterPath())
                 .fit()
                 .into(moviePosterImageView);
+
+        if (movieBackdropImageView != null) {
+            Picasso.with(MovieDetailActivity.this)
+                    .load(movieDetailViewModel.backdropPath())
+                    .fit()
+                    .into(movieBackdropImageView);
+        }
     }
+
 
     @Override
     public void setAddToFavoritesStateTo(boolean isOnFavorites) {
@@ -154,28 +154,47 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     public void showError(String message) {
         hideLoading();
         hideContent();
-        errorDisplay.setVisibility(VISIBLE);
+        showRetry();
+        errorTextDisplay.setVisibility(VISIBLE);
         errorTextDisplay.setText(message);
     }
 
     @Override
     public void hideError() {
-        errorDisplay.setVisibility(GONE);
+        hideRetry();
+        errorTextDisplay.setVisibility(GONE);
     }
 
     private void hideContent() {
-        movieDetailContent.setVisibility(GONE);
+        if (movieBackdropImageView != null) {
+            movieBackdropImageView.setVisibility(GONE);
+        }
+        moviePosterImageView.setVisibility(GONE);
+        movieTitleTextView.setVisibility(GONE);
+        movieReleaseDateTextView.setVisibility(GONE);
+        movieRatingTextView.setVisibility(GONE);
+        movieAddToFavoriteCheckBox.setVisibility(GONE);
+        movieAdditionalInfoViewPager.setVisibility(GONE);
     }
 
     private void showContent() {
         hideLoading();
         hideError();
         hideRetry();
-        movieDetailContent.setVisibility(VISIBLE);
+        if (movieBackdropImageView != null) {
+            movieBackdropImageView.setVisibility(VISIBLE);
+        }
+        moviePosterImageView.setVisibility(VISIBLE);
+        movieTitleTextView.setVisibility(VISIBLE);
+        movieReleaseDateTextView.setVisibility(VISIBLE);
+        movieRatingTextView.setVisibility(VISIBLE);
+        movieAddToFavoriteCheckBox.setVisibility(VISIBLE);
+        movieAdditionalInfoViewPager.setVisibility(VISIBLE);
     }
 
-    @OnClick(R.id.movie_add_to_favorites_checkbox)
+    @OnClick(R.id.movie_detail_add_to_favorites_checkbox)
     public void isFavoriteChanged(View view) {
         movieDetailPresenter.favoriteStateChanged(movieAddToFavoriteCheckBox.isChecked());
     }
+
 }

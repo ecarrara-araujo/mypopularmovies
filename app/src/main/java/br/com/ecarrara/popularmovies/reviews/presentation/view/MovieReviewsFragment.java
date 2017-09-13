@@ -20,7 +20,6 @@ import br.com.ecarrara.popularmovies.R;
 import br.com.ecarrara.popularmovies.core.di.Injector;
 import br.com.ecarrara.popularmovies.reviews.presentation.model.MovieReviewListItemViewModel;
 import br.com.ecarrara.popularmovies.reviews.presentation.presenter.MovieReviewsListPresenter;
-import br.com.ecarrara.popularmovies.trailers.presentation.view.TrailersListAdapter;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -39,6 +38,10 @@ public class MovieReviewsFragment extends Fragment
 
     private static final String ARGUMENT_MOVIE_ID = "movie_id";
     private static final int INVALID_MOVIE_ID = -1;
+
+    private static final String LAST_KNOWN_REVIEWS_LIST_POSITION_KEY = "last_known_movie_list_position";
+    private static final int DEFAULT_REVIEWS_LIST_INITIAL_POSITION = 0;
+    private int lastKnownReviewsListPosition = DEFAULT_REVIEWS_LIST_INITIAL_POSITION;
 
     private MovieReviewsAdapter movieReviewsAdapter;
 
@@ -64,8 +67,16 @@ public class MovieReviewsFragment extends Fragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        processSavedInstanceState(savedInstanceState);
         if (getArguments() != null) {
             movieId = getArguments().getInt(ARGUMENT_MOVIE_ID);
+        }
+    }
+
+    private void processSavedInstanceState(Bundle savedInstanceState) {
+        if(savedInstanceState != null) {
+            lastKnownReviewsListPosition = savedInstanceState.getInt(
+                    LAST_KNOWN_REVIEWS_LIST_POSITION_KEY, DEFAULT_REVIEWS_LIST_INITIAL_POSITION);
         }
     }
 
@@ -101,6 +112,13 @@ public class MovieReviewsFragment extends Fragment
     public void onResume() {
         super.onResume();
         this.movieReviewsListPresenter.attachTo(this, this.movieId);
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putInt(LAST_KNOWN_REVIEWS_LIST_POSITION_KEY,
+                ((LinearLayoutManager)movieReviesListView.getLayoutManager()).findFirstVisibleItemPosition());
+        super.onSaveInstanceState(outState);
     }
 
     @Override
@@ -160,6 +178,13 @@ public class MovieReviewsFragment extends Fragment
     public void displayMovieReviewsList(List<MovieReviewListItemViewModel> movieReviewsList) {
         this.showContent();
         this.movieReviewsAdapter.setMovieReviewsListItemViewModelsList(movieReviewsList);
+        restoreReviewsListPosition();
+    }
+
+    private void restoreReviewsListPosition() {
+        if(movieReviewsAdapter.getItemCount() < lastKnownReviewsListPosition) {
+            movieReviesListView.scrollToPosition(lastKnownReviewsListPosition);
+        }
     }
 
     @Override

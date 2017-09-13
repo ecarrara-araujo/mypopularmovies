@@ -6,34 +6,17 @@
     android:layout_height="match_parent">
 
     <ImageView
-        android:id="@+id/movie_detail_backdrop_image_view"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:elevation="@dimen/movie_detail_view_default_elevation"
-        android:scaleType="center"
-        android:visibility="visible"
-        app:layout_constraintDimensionRatio="h,16:9"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/ic_movie_roll" />
-
-    <ImageView
         android:id="@+id/movie_detail_poster_image_view"
         android:layout_width="0dp"
-        android:layout_height="@dimen/movie_detail_view_poster_height"
-        android:layout_marginBottom="0dp"
-        android:layout_marginLeft="@dimen/movie_detail_view_padding_left"
-        android:layout_marginStart="@dimen/movie_detail_view_padding_left"
-        android:layout_marginTop="0dp"
+        android:layout_height="0dp"
         android:elevation="@dimen/movie_detail_view_poster_elevation"
         android:scaleType="center"
         android:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="@+id/movie_detail_release_date_text_view"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintDimensionRatio="w,2:3"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/movie_detail_original_title_text_view"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@drawable/ic_movie_roll" />
 
     <TextView
@@ -44,15 +27,15 @@
         android:layout_marginLeft="@dimen/movie_detail_view_padding_left"
         android:layout_marginRight="@dimen/movie_detail_view_padding_right"
         android:layout_marginStart="@dimen/movie_detail_view_padding_left"
-        android:layout_marginTop="@dimen/movie_detail_view_padding_top_large"
         android:textSize="18sp"
         android:textStyle="bold"
         android:visibility="visible"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintLeft_toRightOf="@+id/movie_detail_poster_image_view"
         app:layout_constraintRight_toLeftOf="@+id/movie_detail_add_to_favorites_checkbox"
-        app:layout_constraintTop_toBottomOf="@+id/movie_detail_backdrop_image_view"
-        tools:text="This is an Awesome Movie: blablablaablablablabalbalabl" />
+        tools:text="This is an Awesome Movie: blablablaablablablabalbalabl"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginTop="@dimen/movie_detail_view_padding_top_large" />
 
     <TextView
         android:id="@+id/movie_detail_release_date_text_view"
@@ -128,18 +111,29 @@
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/error_message_text_view" />
 
+    <View
+        android:id="@+id/divider"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:background="@color/divider"
+        app:layout_constraintBottom_toTopOf="@+id/movie_details_more_info_view_pager"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginBottom="0dp"
+        android:layout_marginLeft="0dp"
+        app:layout_constraintLeft_toLeftOf="@+id/movie_details_more_info_view_pager" />
+
     <android.support.v4.view.ViewPager
         android:id="@+id/movie_details_more_info_view_pager"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="@dimen/movie_detail_view_padding_top"
+        android:layout_marginTop="8dp"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/movie_detail_poster_image_view"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/movie_detail_release_date_text_view"
+        app:layout_constraintVertical_bias="0.0"
+        app:layout_constraintLeft_toRightOf="@+id/movie_detail_poster_image_view"
+        android:layout_marginLeft="0dp">
 
         <android.support.design.widget.TabLayout
             android:id="@+id/movie_details_more_info_tabs"
@@ -148,18 +142,8 @@
             android:layout_gravity="top"
             android:background="@color/white"
             android:elevation="@dimen/movie_detail_view_default_elevation"
-            app:tabSelectedTextColor="@color/accent"/>
+            app:tabSelectedTextColor="@color/accent" />
 
     </android.support.v4.view.ViewPager>
-
-    <View
-        android:id="@+id/divider"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="@color/divider"
-        app:layout_constraintBottom_toTopOf="@+id/movie_details_more_info_view_pager"
-        app:layout_constraintHorizontal_bias="0.501"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

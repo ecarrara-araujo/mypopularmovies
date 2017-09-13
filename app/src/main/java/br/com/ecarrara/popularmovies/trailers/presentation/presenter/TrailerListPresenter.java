@@ -56,6 +56,10 @@ public class TrailerListPresenter implements Presenter<TrailersListView, Integer
         this.trailersListView.playTrailer(site, key);
     }
 
+    public void trailerShared(String site, String key) {
+        this.trailersListView.shareTrailer(site, key);
+    }
+
     private void displayMovieTrailers() {
         this.trailersListView.hideRetry();
         this.trailersListView.hideError();

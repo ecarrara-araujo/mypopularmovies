@@ -7,5 +7,8 @@ import br.com.ecarrara.popularmovies.trailers.presentation.model.TrailerListItem
 
 public interface TrailersListView extends LoadDataView {
     void displayTrailersList(List<TrailerListItemViewModel> trailerListItemViewModelList);
+
     void playTrailer(String site, String key);
+
+    void shareTrailer(String site, String key);
 }

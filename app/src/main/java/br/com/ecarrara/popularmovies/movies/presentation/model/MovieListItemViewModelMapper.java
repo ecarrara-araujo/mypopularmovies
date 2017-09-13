@@ -10,7 +10,9 @@ public class MovieListItemViewModelMapper {
 
     private static MovieListItemViewModel transformFrom(Movie movie) {
         return MovieListItemViewModel.create(movie.id(),
-                RestImageUrlBuilder.build(movie.posterPath()));
+                RestImageUrlBuilder.buildPosterUrl(movie.posterPath()),
+                movie.originalTitle()
+        );
     }
 
     public static List<MovieListItemViewModel> transformFrom(List<Movie> movies) {

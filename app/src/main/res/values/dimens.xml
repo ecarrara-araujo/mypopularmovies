@@ -4,8 +4,10 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
 
     <!-- Movie List -->
+    <dimen name="movie_list_view_default_padding">8dp</dimen>
     <dimen name="movie_list_view_padding_left">8dp</dimen>
     <dimen name="movie_list_view_padding_right">@dimen/movie_list_view_padding_left</dimen>
+    <dimen name="movie_list_view_squared_button_side">32dp</dimen>
 
     <!-- Movie List Item -->
     <dimen name="movie_list_item_width_ratio">100dp</dimen>
@@ -16,18 +18,27 @@
     <dimen name="movie_list_item_padding_bottom">0dp</dimen>
     
     <!-- Movie Detail -->
+    <dimen name="movie_detail_view_default_elevation">2dp</dimen>
+    <dimen name="movie_detail_view_poster_elevation">3dp</dimen>
     <dimen name="movie_detail_view_padding_left">16dp</dimen>
     <dimen name="movie_detail_view_padding_right">@dimen/movie_list_item_padding_left</dimen>
-    <dimen name="movie_detail_view_padding_top">16dp</dimen>
+    <dimen name="movie_detail_view_padding_top_large">16dp</dimen>
+    <dimen name="movie_detail_view_padding_bottom_large">@dimen/movie_detail_view_padding_top_large</dimen>
+    <dimen name="movie_detail_view_padding_top">8dp</dimen>
     <dimen name="movie_detail_view_padding_bottom">@dimen/movie_detail_view_padding_top</dimen>
+    <dimen name="movie_detail_view_poster_height">100dp</dimen>
+    <dimen name="movie_detail_view_squared_button_side">32dp</dimen>
+
+    <!-- Synopsis -->
+    <dimen name="synopsis_view_default_padding">16dp</dimen>
 
     <!-- Trailers List Item -->
     <dimen name="trailer_list_item_padding_left">8dp</dimen>
     <dimen name="trailer_list_item_padding_right">@dimen/trailer_list_item_padding_left</dimen>
-    <dimen name="trailer_list_item_padding_top">16dp</dimen>
-    <dimen name="trailer_list_item_padding_bottom">0dp</dimen>
-    <dimen name="trailer_list_item_title_text_padding_left">16dp</dimen>
-    <dimen name="trailer_list_item_title_text_padding_right">@dimen/trailer_list_item_title_text_padding_left</dimen>
+    <dimen name="trailer_list_item_padding_top">8dp</dimen>
+    <dimen name="trailer_list_item_padding_bottom">@dimen/trailer_list_item_padding_top</dimen>
+    <dimen name="trailer_list_item_title_text_padding_right">8dp</dimen>
+    <dimen name="trailer_list_item_title_text_padding_left">@dimen/trailer_list_item_title_text_padding_right</dimen>
 
     <!-- Movie Review List Item -->
     <dimen name="movie_review_list_item_margin">16dp</dimen>

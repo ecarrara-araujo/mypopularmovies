@@ -56,6 +56,8 @@ public final class FavoritesContract {
 
         public static final String COLUMN_POSTER_PATH = "poster_path";
 
+        public static final String COLUMN_BACKDROP_PATH = "backdrop_path";
+
         public static final String SQL_CREATE_FAVORITE_MOVIE_TABLE =
                 "CREATE TABLE " + FavoriteMovieEntry.TABLE_NAME + " (" +
                         FavoriteMovieEntry.COLUMN_ID + " INTEGER UNIQUE, " +
@@ -64,7 +66,8 @@ public final class FavoritesContract {
                         FavoriteMovieEntry.COLUMN_RELEASE_DATE + " TEXT NOT NULL, " +
                         FavoriteMovieEntry.COLUMN_POPULARITY + " REAL NOT NULL, " +
                         FavoriteMovieEntry.COLUMN_VOTE_AVERAGE + " REAL NOT NULL, " +
-                        FavoriteMovieEntry.COLUMN_POSTER_PATH + " TEXT NOT NULL " +
+                        FavoriteMovieEntry.COLUMN_POSTER_PATH + " TEXT NOT NULL, " +
+                        FavoriteMovieEntry.COLUMN_BACKDROP_PATH + " TEXT NOT NULL " +
                         ");";
 
     }
