@@ -9,7 +9,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.List;
 
-import br.com.ecarrara.popularmovies.movies.data.repository.MoviesRepository;
+import br.com.ecarrara.popularmovies.core.networking.connectivity.ConnectivityObserver;
+import br.com.ecarrara.popularmovies.favorites.domain.data.FavoritesLocalDataSource;
+import br.com.ecarrara.popularmovies.movies.domain.MoviesRepository;
 import br.com.ecarrara.popularmovies.movies.domain.entity.Movie;
 import br.com.ecarrara.popularmovies.movies.presentation.model.MovieListItemViewModel;
 import br.com.ecarrara.popularmovies.movies.presentation.model.MovieListItemViewModelMapper;
@@ -46,6 +48,12 @@ public class MoviesListPresenterTest {
     @Mock
     MoviesRepository moviesRepository;
 
+    @Mock
+    FavoritesLocalDataSource favoritesLocalDataSource;
+
+    @Mock
+    ConnectivityObserver connectivityObserver;
+
     @BeforeClass
     public static void setupJVMRxHandler() {
         RxAndroidPlugins.setInitMainThreadSchedulerHandler(
@@ -55,7 +63,7 @@ public class MoviesListPresenterTest {
 
     @Before
     public void setUp() {
-        presenter = new MoviesListPresenter(moviesRepository);
+        presenter = new MoviesListPresenter(moviesRepository, favoritesLocalDataSource, connectivityObserver);
     }
 
     @Test

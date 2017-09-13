@@ -5,12 +5,22 @@
     <item
         android:id="@+id/menu_action_load_most_popular"
         android:orderInCategory="1"
-        android:title="@string/most_popular"
-        app:showAsAction="never" />
+        android:title="@string/popular"
+        android:icon="@drawable/ic_popcorn"
+        app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/menu_action_load_top_rated"
         android:orderInCategory="2"
         android:title="@string/top_rated"
-        app:showAsAction="never" />
+        android:icon="@drawable/ic_star_border"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/menu_action_load_favorites"
+        android:orderInCategory="3"
+        android:title="@string/favorites"
+        android:icon="@drawable/ic_heart_border"
+        app:showAsAction="ifRoom" />
+
 </menu>

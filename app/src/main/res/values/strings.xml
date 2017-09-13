@@ -1,9 +1,29 @@
 <resources>
-    <string name="app_name">Popular Movies</string>
-    <string name="retry_button_description">Retry button</string>
+    <string name="app_name">My Movies</string>
     <string name="movie_poster_description">Movie poster</string>
     <string name="top_rated">Top Rated</string>
     <string name="most_popular">Most Popular</string>
+    <string name="popular">Popular</string>
     <string name="synopsis">Synopsis</string>
     <string name="rating">Rating</string>
+    <string name="play_trailer_button">play trailer button</string>
+    <string name="error_fetching_movie_trailers">Error fetching movie trailers</string>
+    <string name="trailer_player_chooser_title">Play trailer on …</string>
+    <string name="indication_of_the_movie_rating">Indication of the movie rating</string>
+
+    <string name="retry_button_description">Retry button</string>
+    <string name="retry_button">Retry</string>
+
+    <string name="movie_detail">Movie Detail</string>
+
+    <string name="movie_detail_rating_format" translatable="false">%1$.1f</string>
+    <string name="movie_detail_synopsis">Synopsis</string>
+    <string name="movie_detail_trailers">Trailers</string>
+    <string name="movie_detail_reviews">Reviews</string>
+
+    <string name="favorites">Favorites</string>
+    <string name="movie_list_poster_loading_error_message">Error Loading Movie Poster</string>
+
+    <string name="trailer_sharing_chooser_title">Share trailer on …</string>
+    <string name="trailer_sharing_message">Check out this awesome trailer: %1$s</string>
 </resources>

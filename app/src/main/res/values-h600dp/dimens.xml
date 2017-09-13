@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Movie Detail -->
+    <dimen name="movie_detail_view_poster_height">160dp</dimen>
+
+</resources>
