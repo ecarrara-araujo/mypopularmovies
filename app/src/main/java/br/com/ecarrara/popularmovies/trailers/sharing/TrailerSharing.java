@@ -26,8 +26,9 @@ public class TrailerSharing {
 
     private static void shareTrailer(Context context, Uri trailerUri) {
         final String title = context.getString(R.string.trailer_sharing_chooser_title);
-        final String message = context.getString(R.string.trailer_sharing_message);
-        Intent shareTrailerIntent = new Intent(android.content.Intent.ACTION_SEND, trailerUri);
+        final String message = context.getString(R.string.trailer_sharing_message, trailerUri);
+        Intent shareTrailerIntent = new Intent(android.content.Intent.ACTION_SEND);
+        shareTrailerIntent.setType("text/plain");
         shareTrailerIntent.putExtra(Intent.EXTRA_TEXT, message);
         context.startActivity(Intent.createChooser(shareTrailerIntent, title));
     }
