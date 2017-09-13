@@ -21,16 +21,19 @@ public class MovieMoreInfoViewPagerAdapter extends FragmentStatePagerAdapter {
     private String synopsis;
     private int movieId;
 
-    public MovieMoreInfoViewPagerAdapter(FragmentManager fragmentManager,
-                                         Context context, int movieId, String synopsis) {
+    public MovieMoreInfoViewPagerAdapter(FragmentManager fragmentManager, Context context) {
         this(fragmentManager);
         this.context = context;
-        this.movieId = movieId;
-        this.synopsis = synopsis;
     }
 
     public MovieMoreInfoViewPagerAdapter(FragmentManager fragmentManager) {
         super(fragmentManager);
+    }
+
+    public void setMovieData(int movieId, String synopsis) {
+        this.movieId = movieId;
+        this.synopsis = synopsis;
+        this.notifyDataSetChanged();
     }
 
     @Override

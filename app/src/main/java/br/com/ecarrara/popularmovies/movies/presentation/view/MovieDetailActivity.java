@@ -48,6 +48,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     @BindView(R.id.movie_details_more_info_tabs) TabLayout movieAdditionalInfoTabs;
 
     private int movieId;
+    private MovieMoreInfoViewPagerAdapter movieMoreInfoViewPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,12 +59,13 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
 
     private void initialize() {
         Injector.applicationComponent().inject(this);
-        processBundle();
+        processIntentParameters();
         ButterKnife.bind(this);
         setUpActionBar();
+        setUpMovieInfoViewPager();
     }
 
-    private void processBundle() {
+    private void processIntentParameters() {
         final Intent movieDetailIntent = getIntent();
         this.movieId = movieDetailIntent.getIntExtra(MovieDetailView.MOVIE_ID_KEY,
                 Movie.INVALID_ID);
@@ -77,12 +79,19 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
         }
     }
 
+    private void setUpMovieInfoViewPager() {
+        movieMoreInfoViewPagerAdapter = new MovieMoreInfoViewPagerAdapter(
+                getSupportFragmentManager(), getApplicationContext());
+        this.movieAdditionalInfoViewPager.setAdapter(movieMoreInfoViewPagerAdapter);
+        this.movieAdditionalInfoTabs.setupWithViewPager(this.movieAdditionalInfoViewPager);
+    }
+
     @Override
     protected void onResume() {
         super.onResume();
         this.movieDetailPresenter.attachTo(this, this.movieId);
     }
-
+    
     @Override
     protected void onDestroy() {
         this.movieDetailPresenter.destroy();
@@ -91,7 +100,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
 
     @Override
     public void displayMovieDetail(MovieDetailViewModel movieDetailViewModel) {
-        displayMovieMoreInformationPageViewer(movieDetailViewModel);
+        movieMoreInfoViewPagerAdapter.setMovieData(movieId, movieDetailViewModel.plotSynopsis());
         showContent();
         movieTitleTextView.setText(movieDetailViewModel.title());
         movieReleaseDateTextView.setText(movieDetailViewModel.releaseDate());
@@ -109,13 +118,6 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
                 .into(movieBackdropImageView);
     }
 
-    private void displayMovieMoreInformationPageViewer(MovieDetailViewModel movieDetailViewModel) {
-        MovieMoreInfoViewPagerAdapter movieMoreInfoViewPagerAdapter =
-                new MovieMoreInfoViewPagerAdapter(getSupportFragmentManager(), getApplicationContext(),
-                        movieId, movieDetailViewModel.plotSynopsis());
-        this.movieAdditionalInfoViewPager.setAdapter(movieMoreInfoViewPagerAdapter);
-        this.movieAdditionalInfoTabs.setupWithViewPager(this.movieAdditionalInfoViewPager);
-    }
 
     @Override
     public void setAddToFavoritesStateTo(boolean isOnFavorites) {
@@ -187,4 +189,5 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     public void isFavoriteChanged(View view) {
         movieDetailPresenter.favoriteStateChanged(movieAddToFavoriteCheckBox.isChecked());
     }
+
 }
