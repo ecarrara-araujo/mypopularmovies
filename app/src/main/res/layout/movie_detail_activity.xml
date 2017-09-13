@@ -22,7 +22,7 @@
     <ImageView
         android:id="@+id/movie_detail_poster_image_view"
         android:layout_width="0dp"
-        android:layout_height="160dp"
+        android:layout_height="@dimen/movie_detail_view_poster_height"
         android:layout_marginBottom="0dp"
         android:layout_marginLeft="16dp"
         android:layout_marginStart="16dp"
