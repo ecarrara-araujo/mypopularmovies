@@ -2,6 +2,7 @@ package br.com.ecarrara.popularmovies.movies.presentation.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -38,7 +39,7 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     @BindView(R.id.error_message_text_view) TextView errorTextDisplay;
     @BindView(R.id.retry_button) Button retryButton;
 
-    @BindView(R.id.movie_detail_backdrop_image_view) ImageView movieBackdropImageView;
+    @Nullable @BindView(R.id.movie_detail_backdrop_image_view) ImageView movieBackdropImageView;
     @BindView(R.id.movie_detail_poster_image_view) ImageView moviePosterImageView;
     @BindView(R.id.movie_detail_original_title_text_view) TextView movieTitleTextView;
     @BindView(R.id.movie_detail_release_date_text_view) TextView movieReleaseDateTextView;
@@ -112,10 +113,12 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
                 .fit()
                 .into(moviePosterImageView);
 
-        Picasso.with(MovieDetailActivity.this)
-                .load(movieDetailViewModel.backdropPath())
-                .fit()
-                .into(movieBackdropImageView);
+        if (movieBackdropImageView != null) {
+            Picasso.with(MovieDetailActivity.this)
+                    .load(movieDetailViewModel.backdropPath())
+                    .fit()
+                    .into(movieBackdropImageView);
+        }
     }
 
 
@@ -163,7 +166,9 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
     }
 
     private void hideContent() {
-        movieBackdropImageView.setVisibility(GONE);
+        if (movieBackdropImageView != null) {
+            movieBackdropImageView.setVisibility(GONE);
+        }
         moviePosterImageView.setVisibility(GONE);
         movieTitleTextView.setVisibility(GONE);
         movieReleaseDateTextView.setVisibility(GONE);
@@ -176,7 +181,9 @@ public class MovieDetailActivity extends AppCompatActivity implements MovieDetai
         hideLoading();
         hideError();
         hideRetry();
-        movieBackdropImageView.setVisibility(VISIBLE);
+        if (movieBackdropImageView != null) {
+            movieBackdropImageView.setVisibility(VISIBLE);
+        }
         moviePosterImageView.setVisibility(VISIBLE);
         movieTitleTextView.setVisibility(VISIBLE);
         movieReleaseDateTextView.setVisibility(VISIBLE);
