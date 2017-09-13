@@ -39,14 +39,26 @@ public class MovieListActivity extends AppCompatActivity
     @BindView(R.id.button_retry) ImageButton retryButton;
     @BindView(R.id.bottom_navigation_menu_movies_filtering) BottomNavigationView moviesFilteringBottomNavigationView;
 
+    private static final String LAST_KNOWN_MOVIE_LIST_POSITION_KEY = "last_known_movie_list_position";
+    private static final int DEFAULT_MOVIE_LIST_INITIAL_POSITION = 0;
+
     private MovieListAdapter movieListAdapter;
+    private int lastKnownMovieListPosition = DEFAULT_MOVIE_LIST_INITIAL_POSITION;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        processSavedInstanceState(savedInstanceState);
         setContentView(R.layout.movie_list_activity);
         ButterKnife.bind(this);
         initialize();
+    }
+
+    private void processSavedInstanceState(Bundle savedInstanceState) {
+        if(savedInstanceState != null) {
+            lastKnownMovieListPosition = savedInstanceState.getInt(
+                    LAST_KNOWN_MOVIE_LIST_POSITION_KEY, DEFAULT_MOVIE_LIST_INITIAL_POSITION);
+        }
     }
 
     private void initialize() {
@@ -77,6 +89,13 @@ public class MovieListActivity extends AppCompatActivity
     }
 
     @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        outState.putInt(LAST_KNOWN_MOVIE_LIST_POSITION_KEY,
+                ((GridLayoutManager)movieListView.getLayoutManager()).findFirstVisibleItemPosition());
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
     protected void onDestroy() {
         this.moviesListPresenter.destroy();
         super.onDestroy();
@@ -86,6 +105,13 @@ public class MovieListActivity extends AppCompatActivity
     public void displayMoviesList(List<MovieListItemViewModel> movieListItemModelList) {
         this.showContent();
         this.movieListAdapter.setMovieListItemViewModels(movieListItemModelList);
+        restoreMovieListPosition();
+    }
+
+    private void restoreMovieListPosition() {
+        if(movieListAdapter.getItemCount() < lastKnownMovieListPosition) {
+            movieListView.scrollToPosition(lastKnownMovieListPosition);
+        }
     }
 
     @Override
