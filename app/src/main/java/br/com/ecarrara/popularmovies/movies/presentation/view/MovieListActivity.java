@@ -26,6 +26,9 @@ import butterknife.ButterKnife;
 
 import static android.view.View.GONE;
 import static android.view.View.VISIBLE;
+import static br.com.ecarrara.popularmovies.movies.presentation.presenter.MoviesListPresenter.ACTION_LIST_FAVORITES;
+import static br.com.ecarrara.popularmovies.movies.presentation.presenter.MoviesListPresenter.ACTION_LIST_POPULAR;
+import static br.com.ecarrara.popularmovies.movies.presentation.presenter.MoviesListPresenter.ACTION_LIST_TOP_RATED;
 
 public class MovieListActivity extends AppCompatActivity
         implements MovieListView, MovieListAdapter.MovieSelectedListener,
@@ -40,10 +43,14 @@ public class MovieListActivity extends AppCompatActivity
     @BindView(R.id.bottom_navigation_menu_movies_filtering) BottomNavigationView moviesFilteringBottomNavigationView;
 
     private static final String LAST_KNOWN_MOVIE_LIST_POSITION_KEY = "last_known_movie_list_position";
+    private static final String LAST_KNOWN_MOVIE_LIST_FILTER_KEY = "last_known_movie_list_filter";
+
     private static final int DEFAULT_MOVIE_LIST_INITIAL_POSITION = 0;
+    private static final int DEFAULT_MOVIE_LIST_INITIAL_FILTER = ACTION_LIST_POPULAR;
 
     private MovieListAdapter movieListAdapter;
     private int lastKnownMovieListPosition = DEFAULT_MOVIE_LIST_INITIAL_POSITION;
+    private int lastKnownMovieListFilter = DEFAULT_MOVIE_LIST_INITIAL_FILTER;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +65,10 @@ public class MovieListActivity extends AppCompatActivity
         if(savedInstanceState != null) {
             lastKnownMovieListPosition = savedInstanceState.getInt(
                     LAST_KNOWN_MOVIE_LIST_POSITION_KEY, DEFAULT_MOVIE_LIST_INITIAL_POSITION);
+            lastKnownMovieListFilter = savedInstanceState.getInt(
+                    LAST_KNOWN_MOVIE_LIST_FILTER_KEY, DEFAULT_MOVIE_LIST_INITIAL_FILTER
+            );
+
         }
     }
 
@@ -85,13 +96,14 @@ public class MovieListActivity extends AppCompatActivity
     @Override
     protected void onResume() {
         super.onResume();
-        this.moviesListPresenter.attachTo(this);
+        this.moviesListPresenter.attachTo(this, lastKnownMovieListFilter);
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         outState.putInt(LAST_KNOWN_MOVIE_LIST_POSITION_KEY,
                 ((GridLayoutManager)movieListView.getLayoutManager()).findFirstVisibleItemPosition());
+        outState.putInt(LAST_KNOWN_MOVIE_LIST_FILTER_KEY, lastKnownMovieListFilter);
         super.onSaveInstanceState(outState);
     }
 
@@ -109,7 +121,7 @@ public class MovieListActivity extends AppCompatActivity
     }
 
     private void restoreMovieListPosition() {
-        if(movieListAdapter.getItemCount() < lastKnownMovieListPosition) {
+        if(movieListAdapter.getItemCount() >= lastKnownMovieListPosition) {
             movieListView.scrollToPosition(lastKnownMovieListPosition);
         }
     }
@@ -200,14 +212,18 @@ public class MovieListActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        lastKnownMovieListPosition = DEFAULT_MOVIE_LIST_INITIAL_POSITION;
         switch (item.getItemId()) {
             case R.id.menu_action_load_most_popular:
+                lastKnownMovieListFilter = ACTION_LIST_POPULAR;
                 this.moviesListPresenter.onListPopularMovies();
                 break;
             case R.id.menu_action_load_top_rated:
+                lastKnownMovieListFilter = ACTION_LIST_TOP_RATED;
                 this.moviesListPresenter.onListTopRatedMovies();
                 break;
             case R.id.menu_action_load_favorites:
+                lastKnownMovieListFilter = ACTION_LIST_FAVORITES;
                 this.moviesListPresenter.onListFavorites();
                 break;
         }

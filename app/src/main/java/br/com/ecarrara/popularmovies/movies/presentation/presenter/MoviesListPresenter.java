@@ -17,11 +17,11 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 
-public class MoviesListPresenter implements Presenter<MovieListView, Void> {
+public class MoviesListPresenter implements Presenter<MovieListView, Integer> {
 
-    private static final int ACTION_LIST_POPULAR = 0;
-    private static final int ACTION_LIST_TOP_RATED = 1;
-    private static final int ACTION_LIST_FAVORITES = 2;
+    public static final int ACTION_LIST_POPULAR = 0;
+    public static final int ACTION_LIST_TOP_RATED = 1;
+    public static final int ACTION_LIST_FAVORITES = 2;
 
     private MoviesRepository moviesRepository;
     private FavoritesLocalDataSource favoritesLocalDataSource;
@@ -54,20 +54,33 @@ public class MoviesListPresenter implements Presenter<MovieListView, Void> {
     }
 
     @Override
-    public void attachTo(MovieListView view) {
+    public void attachTo(MovieListView view) { attachTo(view, ACTION_LIST_POPULAR); }
+
+    @Override
+    public void attachTo(MovieListView view, Integer selectedActionId) {
         this.movieListView = view;
-        onAttachLoadMoviesList();
+        onAttachLoadMoviesList(selectedActionId);
     }
 
-    private void onAttachLoadMoviesList() {
+    private void onAttachLoadMoviesList(Integer selectedActionId) {
         initialize(
                 this.connectivityObserver.observeConnectivity()
                         .firstOrError()
                         .doOnSuccess(isConnected -> MoviesListPresenter.this.isConnected = isConnected)
                         .flatMap(isConnected -> {
                             if (isConnected) {
-                                this.currentAction = ACTION_LIST_POPULAR;
-                                return moviesRepository.listPopularMovies();
+                                switch (selectedActionId) {
+                                    case ACTION_LIST_TOP_RATED:
+                                        this.currentAction = ACTION_LIST_TOP_RATED;
+                                        return moviesRepository.listTopRatedMovies();
+                                    case ACTION_LIST_FAVORITES:
+                                        this.currentAction = ACTION_LIST_FAVORITES;
+                                        return favoritesLocalDataSource.list();
+                                    case ACTION_LIST_POPULAR:
+                                    default:
+                                        this.currentAction = ACTION_LIST_POPULAR;
+                                        return moviesRepository.listPopularMovies();
+                                }
                             } else {
                                 this.currentAction = ACTION_LIST_FAVORITES;
                                 return favoritesLocalDataSource.list();
@@ -83,11 +96,6 @@ public class MoviesListPresenter implements Presenter<MovieListView, Void> {
                 .doOnNext(isConnected -> MoviesListPresenter.this.isConnected = isConnected)
                 .subscribe(this::connectivityStateChanged)
         );
-    }
-
-    @Override
-    public void attachTo(MovieListView view, Void data) {
-        attachTo(view);
     }
 
     public void onRetry() {
