@@ -121,7 +121,7 @@ public class MovieListActivity extends AppCompatActivity
     }
 
     private void restoreMovieListPosition() {
-        if(movieListAdapter.getItemCount() < lastKnownMovieListPosition) {
+        if(movieListAdapter.getItemCount() >= lastKnownMovieListPosition) {
             movieListView.scrollToPosition(lastKnownMovieListPosition);
         }
     }
@@ -212,6 +212,7 @@ public class MovieListActivity extends AppCompatActivity
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        lastKnownMovieListPosition = DEFAULT_MOVIE_LIST_INITIAL_POSITION;
         switch (item.getItemId()) {
             case R.id.menu_action_load_most_popular:
                 lastKnownMovieListFilter = ACTION_LIST_POPULAR;
